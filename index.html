@@ -72,12 +72,11 @@ footer .container { display: flex; flex-wrap: wrap; justify-content: space-betwe
 <header class="hero">
   <div class="container">
     <div class="kicker">v1.0</div>
-    <h1>AI agents that work <em>like a team</em></h1>
-    <p>Office Town is a markdown methodology for AI agent fleets. Four buildings, four roles, a wiki-backed substrate. Your agents stop guessing — they know the work.</p>
+    <h1>Goose capabilities <em>that work like a team</em></h1>
+    <p>Office Town adds four addressable roles, a Cloudflare-backed wiki, and a catalogue of role packs to your <a href="https://block.github.io/goose/">Goose</a> installation. Your single Goose chat becomes a team — boss routing work, librarian curating knowledge, worker building, scout scanning.</p>
     <div class="cta">
       <a href="#agent-install" class="btn btn-primary">Paste into your AI agent</a>
-      <a href="https://download.officetown.au/mac" class="btn btn-secondary">Download for Mac</a>
-      <a href="https://github.com/jezweb/office-town#use-with-goose" class="btn btn-ghost">Use vanilla Goose →</a>
+      <a href="https://block.github.io/goose/" class="btn btn-secondary">Get Goose first</a>
     </div>
   </div>
 </header>
@@ -86,39 +85,33 @@ footer .container { display: flex; flex-wrap: wrap; justify-content: space-betwe
   <div class="container">
     <div class="kicker" style="background: #2563eb;">no setup guides</div>
     <h2 style="margin-top: 0;">Tell your agent to install it</h2>
-    <p>You already have Claude Code, Goose, Codex, Aider, Cline, or another capable agent. Paste this in. It deploys the Cloudflare backend to your account, installs the plugin, sets up your first town, and verifies everything.</p>
+    <p>You have <a href="https://block.github.io/goose/">Goose</a> installed already. Now paste these prompts into any capable AI agent — Goose itself, Claude Code, Aider, Cline — and it'll deploy the Cloudflare backend to your account, install the Goose plugin, wire the MCP servers, and set up your first town.</p>
 
-    <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; max-height: 320px; overflow-y: auto; font: 13px/1.5 'SF Mono', Menlo, monospace; white-space: pre-wrap;">I want to install Office Town — a markdown-based AI agent fleet methodology running on Cloudflare Workers. Source repos:
+    <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; max-height: 360px; overflow-y: auto; font: 13px/1.55 'SF Mono', Menlo, monospace; white-space: pre-wrap;">I want to add Office Town capabilities to my Goose installation. Office Town is a content bundle (Cloudflare Workers + Goose plugin + template + MCP wirings) that installs INTO an existing Goose. It is NOT a Goose replacement.
 
-- https://github.com/jezweb/office-town
-- https://github.com/jezweb/office-town-cloud
-- https://github.com/jezweb/office-town-plugin
-- https://github.com/jezweb/office-town-pack-knowledge
+This is PROMPT A — prerequisites only. Stop at "ready for Prompt B".
 
-Walk me through full setup:
+1. Confirm Goose is installed (`goose --version`). If not, tell me to install Goose first from https://block.github.io/goose/.
 
-1. Gather my Cloudflare account ID + API token (Workers, D1, R2, Vectorize, Queues, Workers AI permissions) + my preferred town folder path. Don't echo or save these unencrypted.
+2. Detect + install toolchain: node 20+, pnpm 10+, wrangler 3+. Use brew on macOS if available; fnm/volta otherwise.
 
-2. Deploy backend to my CF: clone the cloud repo, pnpm install at ui/ level, generate a 32-byte hex MCP bearer token, create D1 office-town-d1, run migrations 0000-0003, create R2 buckets (wiki + files + previews), create Vectorize index office-town-vec (768d cosine) with metadata indexes on collection/slug/entry_id BEFORE deploy, create queue office-town-index, set the bearer as a wrangler secret, deploy the 5 workers (core + 4 MCPs — core first because the rest service-bind to it), verify /health.
+3. Get my Cloudflare credentials (account ID + API token with Workers/D1/R2/Vectorize/Queues/WorkersAI scopes). Stash in env vars; verify with `wrangler whoami`.
 
-3. Install plugin: goose plugin install jezweb/office-town-plugin and jezweb/office-town-pack-knowledge. Wire 4 streamable-HTTP MCP servers in my agent host pointing at the new workers with the bearer token.
+4. Ask where my town folder should live (default ~/Documents/my-town). Verify parent is writable.
 
-4. Set up town folder: clone github.com/jezweb/office-town to my chosen path. Run office-town-setup recipe to capture business identity + voice + team.
+5. Report: Goose version, toolchain versions, Cloudflare masked id, town path. Status: READY FOR PROMPT B.
 
-5. Smoke test: wiki.create a test contact, wiki.search confirms it. @-mention the librarian.
-
-Report 5 worker URLs + token location + town path + monthly cost estimate. Don't delete D1/R2/Vectorize without asking. If wrangler errors, paste full error + diagnose.</div>
+Don't install Office Town in this prompt — that's Prompt B.</div>
 
     <div class="cta" style="margin-top: 1rem;">
-      <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md" class="btn btn-primary">Full prompt + variants on GitHub</a>
-      <a href="#how" class="btn btn-ghost">or read the docs anyway →</a>
+      <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md" class="btn btn-primary">Both prompts on GitHub →</a>
+      <a href="#how" class="btn btn-ghost">or read about the shape →</a>
     </div>
 
     <p class="muted" style="font-size: 0.9em; margin-top: 1.5rem;">
-      Three prompt variants on the GitHub page:
-      <strong>full install</strong>,
-      <strong>cloud-only</strong> (if your agent host is already set up),
-      <strong>connect-existing</strong> (wire a second machine to the same town).
+      <strong>Prompt A</strong> (~5-15 min) checks the machine.
+      <strong>Prompt B</strong> (~10-15 min) installs everything.
+      Plus a <strong>connect-second-machine</strong> helper for laptop+desktop setups.
     </p>
   </div>
 </section>
@@ -205,26 +198,25 @@ your-town/
 <section id="install">
   <div class="container">
     <h2>Get started</h2>
-    <p>Two paths. Custom Distribution is faster; vanilla Goose gives you more control.</p>
+    <p>Three steps, ~25 minutes total. Your AI agent does the work.</p>
 
     <table class="diff-table">
-      <thead><tr><th></th><th>With Office Town Desktop</th><th>With vanilla Goose</th></tr></thead>
+      <thead><tr><th>Step</th><th>What</th><th>Time</th></tr></thead>
       <tbody>
-        <tr><td>1.</td><td class="with">Download Office Town Desktop</td><td class="without">Install Goose</td></tr>
-        <tr><td>2.</td><td class="with">Open it, sign in with Google</td><td class="without">goose plugin install jezweb/office-town-plugin</td></tr>
-        <tr><td>3.</td><td class="with">Click "Deploy to Cloudflare"</td><td class="without">Click "Deploy to Cloudflare"</td></tr>
-        <tr><td>4.</td><td class="with">Paste bearer token. Done.</td><td class="without">Open Goose Settings → Extensions</td></tr>
-        <tr><td>5.</td><td></td><td class="without">Add streamable-http extension × 7</td></tr>
-        <tr><td>6.</td><td></td><td class="without">Paste 7 URLs + bearer tokens</td></tr>
-        <tr><td>7.</td><td></td><td class="without">Configure providers</td></tr>
-        <tr><td>8.</td><td></td><td class="without">Restart Goose</td></tr>
+        <tr><td>1.</td><td>Install <a href="https://block.github.io/goose/">Goose</a> if you don't have it (Desktop or CLI, either works)</td><td>~2 min</td></tr>
+        <tr><td>2.</td><td>Paste <strong>Prompt A</strong> into a capable AI agent → it checks toolchain + Cloudflare access</td><td>~5-15 min</td></tr>
+        <tr><td>3.</td><td>Paste <strong>Prompt B</strong> → it deploys 5 Cloudflare Workers, installs the Goose plugin, sets up your town</td><td>~10-15 min</td></tr>
       </tbody>
     </table>
 
-    <div style="margin-top: 2.5rem;">
+    <p class="muted" style="margin-top: 1.5rem;">
+      The agent doing the install can be Goose itself, Claude Code, Aider, Cline — anything that can run wrangler and edit your Goose config. Office Town runs <strong>inside Goose</strong> afterward.
+    </p>
+
+    <div style="margin-top: 2rem;">
       <div class="cta">
-        <a href="https://github.com/jezweb/office-town-desktop/releases" class="btn btn-primary">Download for macOS</a>
-        <a href="https://github.com/jezweb/office-town-cloud" class="btn btn-secondary">Self-host instructions</a>
+        <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md" class="btn btn-primary">Both prompts on GitHub</a>
+        <a href="https://block.github.io/goose/" class="btn btn-secondary">Get Goose first</a>
       </div>
     </div>
   </div>
