@@ -1,0 +1,10 @@
+.git/
+.gitignore
+.assetsignore
+.DS_Store
+.wrangler/
+.dev.vars
+.playwright-cli/
+*.log
+wrangler.jsonc
+landing-home.png
