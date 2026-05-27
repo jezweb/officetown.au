@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Office Town — a markdown methodology for AI agent fleets. 4 buildings, 4 roles, wiki-backed substrate. Built on Cloudflare. Works in Goose.">
+<title>Office Town — AI agents that work like a team</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E🏢%3C/text%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #fafafa; --fg: #0f172a; --muted: #475569; --accent: #2563eb;
+  --accent-hover: #1d4ed8; --card: #fff; --border: #e2e8f0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font: 17px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--fg); background: var(--bg); }
+.container { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
+nav { padding: 1.5rem 0; }
+nav .container { display: flex; align-items: center; justify-content: space-between; }
+nav .logo { font-weight: 700; font-size: 1.2rem; }
+nav .links { display: flex; gap: 1.5rem; font-size: 0.95rem; }
+nav .links a { color: var(--muted); text-decoration: none; }
+nav .links a:hover { color: var(--fg); }
+.hero { padding: 4rem 0 5rem; text-align: center; }
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.hero h1 em { color: var(--accent); font-style: normal; }
+.hero p { font-size: 1.2rem; color: var(--muted); max-width: 640px; margin: 0 auto 2.5rem; }
+.cta { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.95rem; border: 1px solid transparent; transition: all 0.15s; }
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { background: var(--card); color: var(--fg); border-color: var(--border); }
+.btn-secondary:hover { background: var(--bg); border-color: var(--muted); }
+.btn-ghost { color: var(--muted); }
+.btn-ghost:hover { color: var(--fg); }
+section { padding: 4rem 0; }
+section h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.75rem; }
+section h2 + p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
+.grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+.card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; }
+.card p { color: var(--muted); font-size: 0.95rem; }
+.kicker { display: inline-block; background: var(--accent); color: white; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.shape { font-family: 'SF Mono', Menlo, monospace; font-size: 0.85rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; }
+.diff-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.diff-table th, .diff-table td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+.diff-table th { color: var(--muted); font-weight: 500; font-size: 0.85rem; }
+.diff-table .with { color: var(--fg); font-weight: 500; }
+.diff-table .without { color: var(--muted); text-decoration: line-through; opacity: 0.7; }
+footer { padding: 3rem 0 4rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+@media (max-width: 640px) {
+  nav .links { gap: 1rem; font-size: 0.85rem; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <div class="logo">🏢 Office Town</div>
+    <div class="links">
+      <a href="#how">How</a>
+      <a href="#packs">Packs</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/jezweb/office-town">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="kicker">v1.0</div>
+    <h1>AI agents that work <em>like a team</em></h1>
+    <p>Office Town is a markdown methodology for AI agent fleets. Four buildings, four roles, a wiki-backed substrate. Your agents stop guessing — they know the work.</p>
+    <div class="cta">
+      <a href="https://github.com/jezweb/office-town" class="btn btn-primary">Deploy to Cloudflare</a>
+      <a href="#install" class="btn btn-secondary">Download Office Town Desktop</a>
+      <a href="https://github.com/jezweb/office-town#use-with-goose" class="btn btn-ghost">Use vanilla Goose →</a>
+    </div>
+  </div>
+</header>
+
+<section id="how">
+  <div class="container">
+    <h2>The shape</h2>
+    <p>Four buildings. Four core roles. Add role packs as the work demands.</p>
+
+    <div class="shape">
+your-town/
+├── buildings/
+│   ├── office/          # boss — routes work, holds the thread
+│   ├── library/         # librarian — extracts + curates the wiki
+│   ├── workshop/        # worker — deep work
+│   └── lookout/         # scout — outward scanning
+├── wiki/                # the shared substrate
+│   ├── business/        # who you are
+│   ├── owner/           # voice + rhythm
+│   ├── team/            # humans + agents
+│   ├── contacts/        # external people
+│   ├── orgs/            # clients, prospects, vendors
+│   ├── projects/        # active + historical work
+│   ├── decisions/       # why we chose X
+│   ├── knowledge/       # graduated findings
+│   └── tasks/           # what's open, in flight, done
+└── AGENTS.md            # the town's standing orders
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>The roles</h2>
+    <p>Address them by name. Each knows what they do and what they don't.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>💬 @boss</h3>
+        <p>Talks to you. Routes work. Holds the thread across sessions. Never does deep work itself.</p>
+      </div>
+      <div class="card">
+        <h3>📚 @librarian</h3>
+        <p>Extracts knowledge from your sources. Curates the wiki. Graduates findings into durable concepts.</p>
+      </div>
+      <div class="card">
+        <h3>⚙️ @worker</h3>
+        <p>Deep work. Building. Research. Ships artefacts. Names trade-offs honestly.</p>
+      </div>
+      <div class="card">
+        <h3>🔭 @scout</h3>
+        <p>Outward-facing. Industry. Tools. World. Surfaces what the inward roles wouldn't notice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="packs">
+  <div class="container">
+    <h2>Role packs</h2>
+    <p>Domain-specific roles for the work you actually do.</p>
+
+    <div class="grid">
+      <div class="card"><h3>Startup</h3><p>investor-relations, customer-success, recruiter, bookkeeper + commitments tracking</p></div>
+      <div class="card"><h3>Design</h3><p>designer, copywriter, video-editor + Remotion-driven MP4</p></div>
+      <div class="card"><h3>Hosting</h3><p>hostmaster, devops + DNS audit, SSL renewal, server health</p></div>
+      <div class="card"><h3>WordPress</h3><p>wordpress-specialist + theme/plugin audit, WooCommerce ops</p></div>
+      <div class="card"><h3>Business</h3><p>estimator, project-manager, marketer, writer + quotes collection</p></div>
+      <div class="card"><h3>Cloudflare</h3><p>Bundles official Cloudflare skills + MCP servers</p></div>
+      <div class="card"><h3>Comms</h3><p>helpdesk, social-poster, newsletter-editor</p></div>
+      <div class="card"><h3>Knowledge</h3><p>17 portable agent concepts + 35 coding gotchas — seed your wiki with hard-won wisdom</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="container">
+    <h2>Get started</h2>
+    <p>Two paths. Custom Distribution is faster; vanilla Goose gives you more control.</p>
+
+    <table class="diff-table">
+      <thead><tr><th></th><th>With Office Town Desktop</th><th>With vanilla Goose</th></tr></thead>
+      <tbody>
+        <tr><td>1.</td><td class="with">Download Office Town Desktop</td><td class="without">Install Goose</td></tr>
+        <tr><td>2.</td><td class="with">Open it, sign in with Google</td><td class="without">goose plugin install jezweb/office-town-plugin</td></tr>
+        <tr><td>3.</td><td class="with">Click "Deploy to Cloudflare"</td><td class="without">Click "Deploy to Cloudflare"</td></tr>
+        <tr><td>4.</td><td class="with">Paste bearer token. Done.</td><td class="without">Open Goose Settings → Extensions</td></tr>
+        <tr><td>5.</td><td></td><td class="without">Add streamable-http extension × 7</td></tr>
+        <tr><td>6.</td><td></td><td class="without">Paste 7 URLs + bearer tokens</td></tr>
+        <tr><td>7.</td><td></td><td class="without">Configure providers</td></tr>
+        <tr><td>8.</td><td></td><td class="without">Restart Goose</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 2.5rem;">
+      <div class="cta">
+        <a href="https://github.com/jezweb/office-town-desktop/releases" class="btn btn-primary">Download for macOS</a>
+        <a href="https://github.com/jezweb/office-town-cloud" class="btn btn-secondary">Self-host instructions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>© 2026 Jezweb Pty Ltd · MIT licensed</div>
+    <div>
+      <a href="https://github.com/jezweb/office-town" style="color: var(--muted); margin-right: 1rem;">GitHub</a>
+      <a href="https://jezweb.com.au" style="color: var(--muted);">Built by Jezweb</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
