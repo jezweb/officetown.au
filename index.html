@@ -72,12 +72,61 @@ footer .container { display: flex; flex-wrap: wrap; justify-content: space-betwe
     <h1>AI agents that work <em>like a team</em></h1>
     <p>Office Town is a markdown methodology for AI agent fleets. Four buildings, four roles, a wiki-backed substrate. Your agents stop guessing — they know the work.</p>
     <div class="cta">
-      <a href="https://github.com/jezweb/office-town" class="btn btn-primary">Deploy to Cloudflare</a>
-      <a href="#install" class="btn btn-secondary">Download Office Town Desktop</a>
+      <a href="#agent-install" class="btn btn-primary">Paste into your AI agent</a>
+      <a href="https://download.officetown.au/mac" class="btn btn-secondary">Download for Mac</a>
       <a href="https://github.com/jezweb/office-town#use-with-goose" class="btn btn-ghost">Use vanilla Goose →</a>
     </div>
   </div>
 </header>
+
+<section id="agent-install" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); margin: 2rem 0;">
+  <div class="container">
+    <div class="kicker" style="background: #2563eb;">no setup guides</div>
+    <h2 style="margin-top: 0;">Tell your agent to install it</h2>
+    <p>You already have Claude Code, Goose, Codex, Aider, Cline, or another capable agent. Paste this in. It deploys the Cloudflare backend to your account, installs the plugin, sets up your first town, and verifies everything.</p>
+
+    <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; max-height: 320px; overflow-y: auto; font: 13px/1.5 'SF Mono', Menlo, monospace; white-space: pre-wrap;">I want to install Office Town — a markdown-based AI agent fleet methodology running on Cloudflare Workers. Source repos:
+
+- https://github.com/jezweb/office-town
+- https://github.com/jezweb/office-town-cloud
+- https://github.com/jezweb/office-town-plugin
+- https://github.com/jezweb/office-town-pack-knowledge
+
+Walk me through full setup:
+
+1. Gather my Cloudflare account ID + API token (Workers, D1, R2, Vectorize, Queues, Workers AI permissions) + my preferred town folder path. Don't echo or save these unencrypted.
+
+2. Deploy backend to my CF: clone the cloud repo, pnpm install at ui/ level, generate a 32-byte hex MCP bearer token, create D1 office-town-d1, run migrations 0000-0003, create R2 buckets (wiki + files + previews), create Vectorize index office-town-vec (768d cosine) with metadata indexes on collection/slug/entry_id BEFORE deploy, create queue office-town-index, set the bearer as a wrangler secret, deploy the 5 workers (core + 4 MCPs — core first because the rest service-bind to it), verify /health.
+
+3. Install plugin: goose plugin install jezweb/office-town-plugin and jezweb/office-town-pack-knowledge. Wire 4 streamable-HTTP MCP servers in my agent host pointing at the new workers with the bearer token.
+
+4. Set up town folder: clone github.com/jezweb/office-town to my chosen path. Run office-town-setup recipe to capture business identity + voice + team.
+
+5. Smoke test: wiki.create a test contact, wiki.search confirms it. @-mention the librarian.
+
+Report 5 worker URLs + token location + town path + monthly cost estimate. Don't delete D1/R2/Vectorize without asking. If wrangler errors, paste full error + diagnose.</div>
+
+    <div class="cta" style="margin-top: 1rem;">
+      <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md" class="btn btn-primary">Full prompt + variants on GitHub</a>
+      <a href="#how" class="btn btn-ghost">or read the docs anyway →</a>
+    </div>
+
+    <p class="muted" style="font-size: 0.9em; margin-top: 1.5rem;">
+      Three prompt variants on the GitHub page:
+      <strong>full install</strong>,
+      <strong>cloud-only</strong> (if your agent host is already set up),
+      <strong>connect-existing</strong> (wire a second machine to the same town).
+    </p>
+  </div>
+</section>
+
+<section style="padding: 2rem 0;">
+  <div class="container" style="text-align: center;">
+    <p style="color: var(--muted); font-size: 0.95em;">
+      <strong style="color: var(--fg);">Pro tip:</strong> <code>.town</code> is a real TLD (~$30/yr at Synergy, Hover, Porkbun). Register <code>&lt;yourbusiness&gt;.town</code> and point it at your deployment. Your agent already knows how to wire the DNS.
+    </p>
+  </div>
+</section>
 
 <section id="how">
   <div class="container">
