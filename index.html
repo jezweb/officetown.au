@@ -119,10 +119,14 @@ STEPS:
 2. curl -s <URL>/health — verify the deployment is reachable.
 3. goose plugin install jezweb/office-town-plugin
 4. goose plugin install jezweb/office-town-pack-knowledge
-5. Edit ~/.config/goose/config.yaml — add 4 streamable_http extension
-   entries (office-town-wiki / browser / devops / email) all pointing
-   at <URL>/mcp/<name> with the bearer token in Authorization.
-   Disable Goose's built-in `memory` extension in the same edit.
+5. Wire all 6 MCPs via `goose mcp add` (validates + persists to
+   ~/.config/goose/config.yaml):
+     for name in wiki files email cron voice sandbox; do
+       goose mcp add office-town-$name --transport streamable_http \
+         --url <URL>/mcp/$name --header "Authorization: Bearer <token>"
+     done
+   Disable Goose's built-in `memory` extension — wiki MCP replaces it:
+     goose mcp disable memory
 6. git clone https://github.com/jezweb/office-town <town folder>.
    Seed wiki/knowledge/ from the office-town-pack-knowledge plugin.
 7. Restart Goose. Smoke test: wiki.create a test entry, wiki.search
@@ -149,8 +153,9 @@ hit the Copy button — it copies the full ready-to-paste version.</div>
 
 Office Town is a content bundle (one Cloudflare Worker + Goose plugin
 + town template) that installs INTO an existing Goose. NOT a Goose
-replacement. The Worker hosts 3 MCP servers (wiki, files, email) plus
-a dashboard. The plugin adds 4 agent roles + skills + recipes.
+replacement. The Worker hosts 6 MCP servers (wiki, files, email,
+cron, voice, sandbox) plus a dashboard. The plugin adds 4 agent
+roles + skills + recipes.
 
 I'll provide:
 - My Cloudflare deployment URL (from the Deploy button)
@@ -190,23 +195,21 @@ STEPS:
      goose mcp disable memory
    Or in the Desktop UI: Extensions → Memory → toggle off.
 
-5. Wire the 3 Office Town MCPs via `goose mcp add` (NOT raw YAML
-   editing — let Goose validate the config):
+5. Wire the 6 Office Town MCPs via `goose mcp add` (NOT raw YAML
+   editing — let Goose validate the config). Same bearer for all six:
 
-     goose mcp add office-town-wiki \\
-       --transport streamable_http \\
-       --url <URL>/mcp/wiki \\
-       --header "Authorization: Bearer <MCP_BEARER_TOKEN>"
+     for name in wiki files email cron voice sandbox; do
+       goose mcp add office-town-$name \\
+         --transport streamable_http \\
+         --url <URL>/mcp/$name \\
+         --header "Authorization: Bearer <MCP_BEARER_TOKEN>"
+     done
 
-     goose mcp add office-town-files \\
-       --transport streamable_http \\
-       --url <URL>/mcp/files \\
-       --header "Authorization: Bearer <MCP_BEARER_TOKEN>"
-
-     goose mcp add office-town-email \\
-       --transport streamable_http \\
-       --url <URL>/mcp/email \\
-       --header "Authorization: Bearer <MCP_BEARER_TOKEN>"
+   Note: `office-town-voice` (the call_* actions) and
+   `office-town-sandbox` (the run action) are v1.1-alpha — they return
+   `status: not_yet_wired` placeholders until the Realtime + Containers
+   bindings land. Their other actions (transcribe, synthesize,
+   list_voices, list_languages) work today.
 
    If `goose mcp add` isn't available in your Goose version, fall back
    to editing ~/.config/goose/config.yaml under `extensions:`. Show me
@@ -241,9 +244,12 @@ STEPS:
      Office Town installed for Goose.
        Deployment URL:    <URL>
        Town folder:       <path>
-       MCP servers:       office-town-wiki / files / email (gateway shape)
+       MCP servers:       office-town-{wiki,files,email,cron,voice,sandbox}
+                          (6 gateway tools, 57 actions total)
        Plugins:           office-town-plugin + office-town-pack-knowledge
        Memory:            Goose built-in disabled — wiki MCP replaces it
+       Alpha:             voice.call_* + sandbox.run return placeholders
+                          pending Realtime + Containers wiring (v1.1)
 
      Try: @librarian "extract everything I know about my biggest client"
 
@@ -368,7 +374,7 @@ your-town/
       <tbody>
         <tr><td>1.</td><td>Install <a href="https://block.github.io/goose/">Goose</a> if you don't have it (Desktop or CLI, either works)</td><td>~2 min</td></tr>
         <tr><td>2.</td><td>Click <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud"><strong>Deploy to Cloudflare</strong></a> → sign in, paste a bearer token, click Deploy. Cloudflare provisions D1, R2, Vectorize, Queue, Workers AI, Browser Rendering. Hands you a worker URL.</td><td>~2 min</td></tr>
-        <tr><td>3.</td><td>Paste the prompt from <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md">INSTALL.md</a> into a capable AI agent → it installs the Goose plugin, wires the four MCP servers to your worker URL, clones the town template, runs a smoke test.</td><td>~3 min</td></tr>
+        <tr><td>3.</td><td>Paste the prompt from <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md">INSTALL.md</a> into a capable AI agent → it installs the Goose plugin, wires the six MCP servers (wiki, files, email, cron, voice, sandbox) to your worker URL, clones the town template, runs a smoke test.</td><td>~3 min</td></tr>
       </tbody>
     </table>
 
