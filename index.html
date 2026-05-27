@@ -83,52 +83,53 @@ footer .container { display: flex; flex-wrap: wrap; justify-content: space-betwe
 
 <section id="agent-install" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); margin: 2rem 0;">
   <div class="container">
-    <div class="kicker" style="background: #2563eb;">no setup guides</div>
-    <h2 style="margin-top: 0;">Tell your agent to install it</h2>
-    <p>You have <a href="https://block.github.io/goose/">Goose</a> installed already. Paste <strong>one prompt</strong> into any capable AI agent — Goose itself, Claude Code, Aider, Cline. It checks your machine, asks before installing anything, deploys the Cloudflare backend to your account, installs the Goose plugin, wires the MCP servers, and sets up your first town. ~20-30 minutes end-to-end.</p>
+    <div class="kicker" style="background: #2563eb;">two steps</div>
+    <h2 style="margin-top: 0;">Click a button, paste a prompt, done</h2>
+    <p>You have <a href="https://block.github.io/goose/">Goose</a> installed already. Cloudflare provisions the backend in one click — D1, R2, Vectorize, Queue, Workers AI, Browser Rendering all auto-created from <code>wrangler.jsonc</code>. Then paste a short prompt into any capable AI agent to wire it into Goose. About 7 minutes end-to-end.</p>
 
-    <div style="position: relative; margin: 1.5rem 0;">
+    <h3 style="margin-top: 1.75rem; margin-bottom: 0.5rem;">1. Deploy the backend</h3>
+    <div class="cta">
+      <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud" class="btn btn-primary" style="font-size: 1.1em;">🚀 Deploy to Cloudflare</a>
+    </div>
+    <p class="muted" style="font-size: 0.9em; margin-top: 0.5rem;">
+      Cloudflare signs you in (no API token needed) and prompts for one required secret: <code>MCP_BEARER_TOKEN</code>. Generate via <code>openssl rand -hex 32</code>. ~2 minutes — hands you a worker URL.
+    </p>
+
+    <h3 style="margin-top: 1.75rem; margin-bottom: 0.5rem;">2. Wire it into Goose</h3>
+    <div style="position: relative; margin: 0.75rem 0 1rem 0;">
     <button type="button" id="copy-prompt-btn" onclick="copyInstallPrompt()" style="position: absolute; top: 12px; right: 12px; z-index: 10; padding: 6px 12px; background: #2563eb; color: white; border: 0; border-radius: 6px; font: 600 12px/1 system-ui, sans-serif; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">📋 Copy full prompt</button>
     <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; padding-top: 3rem; max-height: 360px; overflow-y: auto; font: 13px/1.55 'SF Mono', Menlo, monospace; white-space: pre-wrap;">I want to add Office Town capabilities to my Goose installation.
 
-Office Town is a content bundle (Cloudflare Workers + Goose plugin + template + MCP wirings) that installs INTO an existing Goose. NOT a Goose replacement.
+Office Town is a content bundle (Cloudflare Worker + Goose plugin + template) that installs INTO an existing Goose. NOT a Goose replacement.
 
-Source repos (all public, github.com/jezweb):
-- office-town          (template + methodology)
-- office-town-cloud    (Cloudflare Workers backend)
-- office-town-plugin   (Goose plugin: agents/skills/commands/rules)
-- office-town-pack-knowledge  (concepts to seed the wiki)
+I'll provide:
+- My Cloudflare deployment URL (just got it from the Deploy button)
+- My MCP_BEARER_TOKEN (the one I entered in the Cloudflare deploy form)
+- A town folder path (default: ~/Documents/my-town)
 
 GROUND RULES:
-- Be transparent. Say what you're about to do before doing it.
-- Ask before destructive ops, software installs, anything chargeable.
-- If Goose isn't installed: stop, send me to https://block.github.io/goose/.
+- Be transparent. Say what you're about to do.
+- Ask before destructive ops or any software install.
+- If Goose isn't installed: stop, point me at https://block.github.io/goose/.
 - Don't echo or save credentials. Env vars only.
-- Summarise after each phase.
 
-PHASE 1 — DETECT + PREREQS
-  goose, git, node 20+, pnpm 10+, wrangler 3+. Propose how to install
-  whatever's missing (brew/fnm/volta/winget). Get Cloudflare account ID
-  + API token, verify with `wrangler whoami`. Confirm town folder path.
-  Print summary, ask "proceed?"
+STEPS:
 
-PHASE 2 — DEPLOY THE CLOUD BACKEND
-  Clone office-town-cloud. Generate MCP_BEARER_TOKEN. Create D1 + 4 R2
-  buckets + Vectorize index + metadata indexes (BEFORE first insert) +
-  queue. Set the bearer secret on each of 5 workers. Deploy core first,
-  then the 4 MCPs (they service-bind to core). Verify each /health.
+1. Check Goose is installed (`goose --version`). If not, stop.
+2. curl -s <URL>/health — verify the deployment is reachable.
+3. goose plugin install jezweb/office-town-plugin
+4. goose plugin install jezweb/office-town-pack-knowledge
+5. Edit ~/.config/goose/config.yaml — add 4 streamable_http extension
+   entries (office-town-wiki / browser / devops / email) all pointing
+   at <URL>/mcp/<name> with the bearer token in Authorization.
+   Disable Goose's built-in `memory` extension in the same edit.
+6. git clone https://github.com/jezweb/office-town <town folder>.
+   Seed wiki/knowledge/ from the office-town-pack-knowledge plugin.
+7. Restart Goose. Smoke test: wiki.create a test entry, wiki.search
+   finds it, @boss "introduce the team" works.
 
-PHASE 3 — TEMPLATE + GOOSE PLUGIN
-  Clone office-town template to my chosen path. Run `goose plugin install`
-  for office-town-plugin and office-town-pack-knowledge. Edit
-  ~/.config/goose/config.yaml to wire the 4 streamable-HTTP MCPs with my
-  bearer token. Seed wiki/knowledge/ from the pack. Restart Goose.
-
-PHASE 4 — SMOKE TEST + REPORT
-  wiki.create a test entry, wiki.search finds it, @boss responds with
-  the 4 buildings. Print final URLs + paths + cost estimate.
-
-Full prompt with all sub-steps + constraints: see the INSTALL.md link, or hit the Copy button — it copies the full ready-to-paste version.</div>
+Full prompt with verification checks: see INSTALL.md link below, or
+hit the Copy button — it copies the full ready-to-paste version.</div>
     </div>
 
     <div class="cta" style="margin-top: 1rem;">
@@ -137,8 +138,8 @@ Full prompt with all sub-steps + constraints: see the INSTALL.md link, or hit th
     </div>
 
     <p class="muted" style="font-size: 0.9em; margin-top: 1.5rem;">
-      The agent pauses after Phase 1 with a summary so you can review
-      before any Cloudflare resources are created. Plus a
+      The agent never touches wrangler — Cloudflare's web flow already
+      handled all the provisioning. Plus a
       <strong>connect-second-machine</strong> helper in INSTALL.md
       for laptop+desktop setups.
     </p>
@@ -146,284 +147,100 @@ Full prompt with all sub-steps + constraints: see the INSTALL.md link, or hit th
   </div>
   <script type="text/plain" id="install-prompt-full">I want to add Office Town capabilities to my Goose installation.
 
-Office Town is a content bundle (Cloudflare Workers + Goose plugin +
-template + MCP wirings) that installs INTO an existing Goose. It is
-NOT a Goose replacement, NOT a separate agent runtime, NOT a CLI of
-its own. The host I want to install it into is Goose; if I'm using
-something else right now (Claude Code, Aider, etc.) you are just the
-agent running the install — Office Town runs in Goose afterward.
+Office Town is a content bundle (one Cloudflare Worker + Goose plugin
++ template) that installs INTO an existing Goose. NOT a Goose
+replacement.
 
-Source repos (all public, github.com/jezweb):
-- office-town          (template + methodology)
-- office-town-cloud    (Cloudflare Workers backend)
-- office-town-plugin   (Goose plugin: agents/skills/commands/rules)
-- office-town-pack-knowledge  (concepts to seed the wiki)
+I'll provide:
+- My Cloudflare deployment URL (just deployed via the Deploy to
+  Cloudflare button)
+- My MCP_BEARER_TOKEN (entered into the Cloudflare deploy form)
+- A town folder path (default: ~/Documents/my-town)
 
-GENERAL RULES FOR THE WHOLE INSTALL:
-- Be transparent. Tell me what you're about to do before doing it.
-- Ask before destructive operations (delete, drop, force-push, etc).
-- Ask before any software install (brew, node, wrangler, goose).
-- If something is missing (Goose, Cloudflare account, etc.), tell me
-  how to get it and pause — don't try to invent workarounds.
-- Don't echo credentials. Stash them in env vars; never in a file
-  that ends up tracked by git.
-- After each phase, summarise what got done before proceeding.
+GROUND RULES:
+- Be transparent. Say what you're about to do.
+- Ask before destructive ops or any software install.
+- If Goose isn't installed: stop, point me at
+  https://block.github.io/goose/.
+- Don't echo or save credentials. Env vars only.
 
-==============================================================
-PHASE 1 — DETECT STATE + SET UP PREREQUISITES
-==============================================================
+STEPS:
 
-1. Check Goose is installed.
-     goose --version
-   If not found: stop. Tell me to install Goose first from
-   https://block.github.io/goose/, then re-run this prompt. Don't
-   try to install Goose yourself unless I explicitly tell you to.
+1. Check Goose is installed (`goose --version`). If not, stop.
 
-2. Check toolchain. Run version checks for:
-     git --version              (any modern version)
-     node --version             (need 20+)
-     pnpm --version             (need 10+)
-     wrangler --version         (need 3+)
+2. Verify the deployment URL works:
+     curl -s <URL>/health
+   Should return {"status":"ok","service":"office-town",...}
 
-   For each missing or out-of-date:
-   - Tell me what's missing
-   - Propose how to install on my platform:
-     * macOS: brew (preferred) or fnm/volta if I don't want brew
-     * Linux: apt/dnf/pacman, or fnm/volta in user space
-     * Windows: winget or scoop
-   - Ask "should I install <X> via <method>?" and wait for my
-     confirmation before installing
-   - On macOS, if brew itself is missing, ask before installing
-     Homebrew via the official curl script from brew.sh
-
-   wrangler specifically: install globally with
-     npm install -g wrangler@latest
-   (or pnpm equivalent). Verify with wrangler --version.
-
-3. Cloudflare credentials.
-
-   Check if CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN are
-   already set in my environment. If yes, verify them with:
-     wrangler whoami
-
-   If not set, or verify fails:
-   a. Ask me for my Cloudflare account ID (32-char hex, visible at
-      dash.cloudflare.com -> any account -> right sidebar). If I
-      don't have an account: pause, tell me to sign up free at
-      https://dash.cloudflare.com/sign-up, wait until I confirm.
-
-   b. Ask me for a Cloudflare API token with these permissions:
-        Workers Scripts: Edit
-        Workers Routes: Edit
-        D1: Edit
-        R2: Edit (Object + Bucket)
-        Vectorize: Edit
-        Queues: Edit
-        Workers AI: Read
-        Account Settings: Read
-      Tell me how to create it: dash.cloudflare.com -> My Profile ->
-      API Tokens -> Create Token. Use the "Edit Cloudflare Workers"
-      template, then add the other scopes.
-
-   c. When I paste them, immediately stash in env vars (don't echo,
-      don't save to disk):
-        export CLOUDFLARE_ACCOUNT_ID=...
-        export CLOUDFLARE_API_TOKEN=...
-
-   d. Verify: wrangler whoami should show my email + account list.
-      If error, walk me through fixing the token (usually missing
-      a scope).
-
-4. Town folder.
-   Ask where my town folder should live. Default: ~/Documents/my-town.
-   Verify the PARENT directory exists and is writable.
-   Don't create the town folder yet — phase 2 does that.
-
-5. SUMMARY before proceeding.
-   Print:
-     Goose:          <version>
-     git:            <version>
-     node:           <version>
-     pnpm:           <version>
-     wrangler:       <version>
-     Cloudflare:     <account name, masked id like 5369****7728>
-     Town folder:    <chosen path>
-     Status:         READY TO INSTALL
-
-   Then ask: "Proceed with Phase 2 (the actual install)? It will
-   create 5 workers + D1 + R2 buckets + Vectorize index + queue +
-   secrets in my Cloudflare account, costs ~$2-5/month, ~15 min
-   to complete."
-
-   Wait for my "yes" before continuing.
-
-==============================================================
-PHASE 2 — DEPLOY THE CLOUD BACKEND
-==============================================================
-
-1. Clone office-town-cloud:
-     git clone https://github.com/jezweb/office-town-cloud ~/src/office-town-cloud
-     cd ~/src/office-town-cloud
-     pnpm install     # workspace root is the repo root
-
-2. Generate MCP bearer token:
-     export MCP_BEARER_TOKEN=$(openssl rand -hex 32)
-   You'll use it multiple times below. Don't lose it.
-
-3. Create D1, patch its ID into packages/core/wrangler.jsonc:
-     wrangler d1 create office-town-d1
-     # then edit packages/core/wrangler.jsonc:
-     #   d1_databases[0].database_id = <returned id>
-
-   Then apply migrations:
-     cd packages/core
-     wrangler d1 migrations apply office-town-d1 --remote
-     cd ../..
-
-4. Create R2 buckets:
-     wrangler r2 bucket create office-town-wiki
-     wrangler r2 bucket create office-town-wiki-preview
-     wrangler r2 bucket create office-town-files
-     wrangler r2 bucket create office-town-files-preview
-
-5. Create Vectorize index, then metadata indexes BEFORE deploying
-   any worker (Vectorize won't retroactively index existing vectors):
-     wrangler vectorize create office-town-vec --dimensions=768 --metric=cosine
-     wrangler vectorize create-metadata-index office-town-vec --property-name=collection --type=string
-     wrangler vectorize create-metadata-index office-town-vec --property-name=slug         --type=string
-     wrangler vectorize create-metadata-index office-town-vec --property-name=entry_id     --type=string
-
-6. Create the indexing queue:
-     wrangler queues create office-town-index
-
-7. Set MCP_BEARER_TOKEN as a wrangler secret on each worker, then
-   deploy in order — core first; the MCPs service-bind to it:
-
-     for pkg in packages/core packages/mcp-wiki packages/mcp-browser packages/mcp-devops packages/mcp-email; do
-       (cd "$pkg" && echo -n "$MCP_BEARER_TOKEN" | wrangler secret put MCP_BEARER_TOKEN && wrangler deploy)
-     done
-
-   Each deploy prints the worker's .workers.dev URL. Record all 5.
-
-8. Verify health on each:
-     for u in <core-url> <mcp-wiki-url> <mcp-browser-url> <mcp-devops-url> <mcp-email-url>; do
-       curl -sS "$u/health" && echo
-     done
-   Each returns {"status":"ok",...}.
-
-9. Verify wiki API:
-     curl -H "Authorization: Bearer $MCP_BEARER_TOKEN" <core-url>/api/wiki/collections
-   Expect 11 default collections.
-
-If any wrangler command errors:
-- "Authentication error" -> token is missing a scope; help me fix
-- "Already exists" -> idempotent, continue
-- "No D1 binding" -> wrangler.jsonc database_id wasn't patched
-- "Vectorize metadata index already exists" -> idempotent, continue
-- Anything else: paste full error to me, diagnose, don't blindly
-  retry (especially destructive ops)
-
-==============================================================
-PHASE 3 — CLONE TEMPLATE + INSTALL GOOSE PLUGIN
-==============================================================
-
-1. Clone the town template:
-     git clone https://github.com/jezweb/office-town <my chosen path>
-   Confirm the 4 building folders exist:
-     buildings/{office,library,workshop,lookout}/AGENTS.md
-   And the roles at roles/{boss,librarian,worker,scout}.md.
-
-2. Install the Goose plugin + knowledge pack:
+3. Install Goose plugins:
      goose plugin install jezweb/office-town-plugin
      goose plugin install jezweb/office-town-pack-knowledge
+   Verify with `goose plugin list`.
 
-   Verify with: goose plugin list
+4. Edit ~/.config/goose/config.yaml. Show me the diff first. Add
+   under `extensions:`:
 
-3. Wire the 4 MCP servers into Goose. Edit ~/.config/goose/config.yaml
-   and add under extensions:
-
-     extensions:
        office-town-wiki:
          type: streamable_http
-         url: <core-url>/mcp/wiki
+         url: <URL>/mcp/wiki
          headers:
            Authorization: Bearer <MCP_BEARER_TOKEN>
        office-town-browser:
          type: streamable_http
-         url: <mcp-browser-url>/mcp
+         url: <URL>/mcp/browser
          headers:
            Authorization: Bearer <MCP_BEARER_TOKEN>
        office-town-devops:
          type: streamable_http
-         url: <mcp-devops-url>/mcp
+         url: <URL>/mcp/devops
          headers:
            Authorization: Bearer <MCP_BEARER_TOKEN>
        office-town-email:
          type: streamable_http
-         url: <mcp-email-url>/mcp
+         url: <URL>/mcp/email
          headers:
            Authorization: Bearer <MCP_BEARER_TOKEN>
 
-   If `goose mcp add` is available in this Goose version, use that
-   instead. Otherwise edit config.yaml directly.
+   Also disable Goose's built-in `memory` extension so it doesn't
+   compete with the wiki MCP. Set `disabled: true` on the memory
+   extension entry, or remove it.
 
-4. Seed the wiki:
-     mkdir -p <town-path>/wiki/knowledge
-     cp -r ~/.config/goose/plugins/office-town-pack-knowledge/concepts/* \
-           <town-path>/wiki/knowledge/
-   Path may differ slightly per Goose version. Find it via
-   `goose plugin info office-town-pack-knowledge` if needed.
+5. Clone the town template to my chosen folder (default
+   ~/Documents/my-town):
+     git clone https://github.com/jezweb/office-town <town path>
 
-5. Restart Goose (Desktop), or for CLI just start a fresh session.
+   Seed the wiki with the knowledge pack — find where Goose
+   installed it (try `goose plugin info office-town-pack-knowledge`)
+   and copy its concepts/ into <town>/wiki/knowledge/.
 
-==============================================================
-PHASE 4 — SMOKE TEST + REPORT
-==============================================================
+6. Restart Goose (Desktop) or start a fresh CLI session.
 
-In a Goose chat at <town-path>:
+7. SMOKE TEST in a fresh Goose chat at the town folder:
+   a. Ask wiki.create to make a test entry in collection "contacts"
+      with slug "smoke-test", frontmatter {name: "Test", kind: "contact"},
+      body "Install smoke test."
+   b. wiki.search "Test" — expect a hit.
+   c. @boss "introduce the team" — expect coherent reply referencing
+      the 4 buildings (office/library/workshop/lookout) and the 4
+      default roles (boss/librarian/worker/scout).
 
-1. Ask Goose to call wiki.create with:
-     {"collection": "contacts", "slug": "test-smoke",
-      "frontmatter": {"name": "Test Person", "kind": "contact"},
-      "body": "Initial install smoke test."}
-   Expect 201-shaped response.
-
-2. wiki.search "Test Person" — expect a hit.
-
-3. @boss "introduce the team" — expect coherent response referencing
-   the 4 buildings + 4 default roles.
-
-4. (Optional) wiki.delete contacts/test-smoke
-
-5. Final report. Print exactly:
+8. Final report:
 
      Office Town installed for Goose.
+       Deployment URL:    <URL>
+       Town folder:       <path>
+       Plugins:           office-town-plugin + office-town-pack-knowledge
+       Wiki seeded:       <N> concepts in knowledge/
 
-     Workers (all returning HTTP 200 /health):
-       core:    <url>
-       wiki:    <url>
-       browser: <url>
-       devops:  <url>
-       email:   <url>
-
-     MCP bearer token: stored at <where>
-     Town folder:      <path>, 4 buildings present
-     Goose plugins:    jezweb/office-town-plugin + office-town-pack-knowledge
-     Wiki seeded:      knowledge/ has <N> concepts
-
-     Estimated monthly cost: ~$2-5 USD at typical SMB volume.
-
-     Try this next:
-       In a Goose chat at <town-path>, @librarian "extract
-       everything I know about [my main client]". The librarian
-       will walk me through capturing their first wiki entries.
+     Try: @librarian "extract everything I know about my biggest
+     client" — the librarian will walk you through capturing their
+     first wiki entries.
 
 CONSTRAINTS:
-- Never delete D1 / R2 / Vectorize without asking.
-- If a wrangler command will take longer than 60s, tell me + ETA.
-- If a deploy fails after 2 retries, stop. Don't keep retrying.
 - DO NOT install a different agent host. Goose is the host.
-- DO NOT save my Cloudflare token to a git-tracked path.
+- DO NOT touch wrangler, pnpm, or your local Cloudflare account from
+  here — the button already did all of that.
+- Ask before editing config.yaml; show me the diff first.
 </script>
   <script>
     function copyInstallPrompt() {
@@ -531,18 +348,19 @@ your-town/
 <section id="install">
   <div class="container">
     <h2>Get started</h2>
-    <p>Two steps. ~20-30 minutes total. Your AI agent does the work.</p>
+    <p>Three steps, ~7 minutes total. The button does the heavy lifting; your AI agent wires it into Goose.</p>
 
     <table class="diff-table">
       <thead><tr><th>Step</th><th>What</th><th>Time</th></tr></thead>
       <tbody>
         <tr><td>1.</td><td>Install <a href="https://block.github.io/goose/">Goose</a> if you don't have it (Desktop or CLI, either works)</td><td>~2 min</td></tr>
-        <tr><td>2.</td><td>Paste the prompt from <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md">INSTALL.md</a> into a capable AI agent → it checks your machine, asks before any install, deploys the backend, wires the plugin, sets up your town</td><td>~20-30 min</td></tr>
+        <tr><td>2.</td><td>Click <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud"><strong>Deploy to Cloudflare</strong></a> → sign in, paste a bearer token, click Deploy. Cloudflare provisions D1, R2, Vectorize, Queue, Workers AI, Browser Rendering. Hands you a worker URL.</td><td>~2 min</td></tr>
+        <tr><td>3.</td><td>Paste the prompt from <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md">INSTALL.md</a> into a capable AI agent → it installs the Goose plugin, wires the four MCP servers to your worker URL, clones the town template, runs a smoke test.</td><td>~3 min</td></tr>
       </tbody>
     </table>
 
     <p class="muted" style="margin-top: 1.5rem;">
-      The agent doing the install can be Goose itself, Claude Code, Aider, Cline — anything that can run wrangler and edit your Goose config. Office Town runs <strong>inside Goose</strong> afterward.
+      The agent doing step 3 can be Goose itself, Claude Code, Aider, Cline — anything that can run shell commands and edit YAML. It never touches wrangler or your local toolchain; Cloudflare's web flow handled all of that in step 2.
     </p>
 
     <div style="margin-top: 2rem;">
