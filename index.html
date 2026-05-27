@@ -148,13 +148,13 @@ hit the Copy button — it copies the full ready-to-paste version.</div>
   <script type="text/plain" id="install-prompt-full">I want to add Office Town capabilities to my Goose installation.
 
 Office Town is a content bundle (one Cloudflare Worker + Goose plugin
-+ template) that installs INTO an existing Goose. NOT a Goose
-replacement.
++ town template) that installs INTO an existing Goose. NOT a Goose
+replacement. The Worker hosts 3 MCP servers (wiki, files, email) plus
+a dashboard. The plugin adds 4 agent roles + skills + recipes.
 
 I'll provide:
-- My Cloudflare deployment URL (just deployed via the Deploy to
-  Cloudflare button)
-- My MCP_BEARER_TOKEN (entered into the Cloudflare deploy form)
+- My Cloudflare deployment URL (from the Deploy button)
+- My MCP_BEARER_TOKEN (entered in the Cloudflare deploy form)
 - A town folder path (default: ~/Documents/my-town)
 
 GROUND RULES:
@@ -166,86 +166,94 @@ GROUND RULES:
 
 STEPS:
 
-1. Check Goose is installed (`goose --version`). If not, stop.
+1. Check Goose is installed:
+     goose --version
+   If not, stop and direct me to https://block.github.io/goose/.
 
 2. Verify the deployment URL works:
      curl -s <URL>/health
    Should return {"status":"ok","service":"office-town",...}
 
-3. Install Goose plugins:
+3. Install the Office Town plugin (Open Plugin Spec — installs to
+   ~/.agents/plugins/):
      goose plugin install jezweb/office-town-plugin
      goose plugin install jezweb/office-town-pack-knowledge
-   Verify with `goose plugin list`.
+   Verify:
+     goose plugin list
 
-4. Edit ~/.config/goose/config.yaml. Show me the diff first. Add
-   under `extensions:`:
+   OPTIONAL — for Cloudflare account ops (DNS, R2, D1 admin):
+     goose plugin install jezweb/office-town-pack-cloudflare
+   This bundles Cloudflare's official MCPs from github.com/cloudflare/mcp.
 
-       office-town-wiki:
-         type: streamable_http
-         url: <URL>/mcp/wiki
-         headers:
-           Authorization: Bearer <MCP_BEARER_TOKEN>
-       office-town-files:
-         type: streamable_http
-         url: <URL>/mcp/files
-         headers:
-           Authorization: Bearer <MCP_BEARER_TOKEN>
-       office-town-browser:
-         type: streamable_http
-         url: <URL>/mcp/browser
-         headers:
-           Authorization: Bearer <MCP_BEARER_TOKEN>
-       office-town-devops:
-         type: streamable_http
-         url: <URL>/mcp/devops
-         headers:
-           Authorization: Bearer <MCP_BEARER_TOKEN>
-       office-town-email:
-         type: streamable_http
-         url: <URL>/mcp/email
-         headers:
-           Authorization: Bearer <MCP_BEARER_TOKEN>
+4. Disable Goose's built-in Memory extension — the wiki MCP replaces
+   it (per docs/MEMORY-COMPARISON.md). Use Goose's CLI:
+     goose mcp disable memory
+   Or in the Desktop UI: Extensions → Memory → toggle off.
 
-   Also disable Goose's built-in `memory` extension so it doesn't
-   compete with the wiki MCP. Set `disabled: true` on the memory
-   extension entry, or remove it.
+5. Wire the 3 Office Town MCPs via `goose mcp add` (NOT raw YAML
+   editing — let Goose validate the config):
 
-5. Clone the town template to my chosen folder (default
+     goose mcp add office-town-wiki \\
+       --transport streamable_http \\
+       --url <URL>/mcp/wiki \\
+       --header "Authorization: Bearer <MCP_BEARER_TOKEN>"
+
+     goose mcp add office-town-files \\
+       --transport streamable_http \\
+       --url <URL>/mcp/files \\
+       --header "Authorization: Bearer <MCP_BEARER_TOKEN>"
+
+     goose mcp add office-town-email \\
+       --transport streamable_http \\
+       --url <URL>/mcp/email \\
+       --header "Authorization: Bearer <MCP_BEARER_TOKEN>"
+
+   If `goose mcp add` isn't available in your Goose version, fall back
+   to editing ~/.config/goose/config.yaml under `extensions:`. Show me
+   the diff before applying.
+
+6. Clone the town template to my chosen folder (default
    ~/Documents/my-town):
      git clone https://github.com/jezweb/office-town <town path>
 
-   Seed the wiki with the knowledge pack — find where Goose
-   installed it (try `goose plugin info office-town-pack-knowledge`)
-   and copy its concepts/ into <town>/wiki/knowledge/.
+7. Restart Goose (Desktop) or start a fresh CLI session.
 
-6. Restart Goose (Desktop) or start a fresh CLI session.
+8. SMOKE TEST in a fresh Goose chat at the town folder:
+   a. Use the wiki gateway tool:
+        wiki(action: 'write',
+             collection: 'contacts',
+             slug: 'smoke-test',
+             frontmatter: {name: 'Test', kind: 'contact'},
+             body: 'Install smoke test.',
+             why: 'install verification')
+      Should return {slug, uuid, audit_id, ...}.
+   b. wiki(action: 'search', query: 'Test')
+      Should return the smoke-test hit.
+   c. wiki(action: 'list', collection: 'contacts')
+      Should show smoke-test in the list.
+   d. @boss "introduce the team"
+      Should respond coherently mentioning the 4 buildings
+      (office/library/workshop/lookout) and 4 default roles
+      (boss/librarian/worker/scout).
 
-7. SMOKE TEST in a fresh Goose chat at the town folder:
-   a. Ask wiki.create to make a test entry in collection "contacts"
-      with slug "smoke-test", frontmatter {name: "Test", kind: "contact"},
-      body "Install smoke test."
-   b. wiki.search "Test" — expect a hit.
-   c. @boss "introduce the team" — expect coherent reply referencing
-      the 4 buildings (office/library/workshop/lookout) and the 4
-      default roles (boss/librarian/worker/scout).
-
-8. Final report:
+9. Final report:
 
      Office Town installed for Goose.
        Deployment URL:    <URL>
        Town folder:       <path>
+       MCP servers:       office-town-wiki / files / email (gateway shape)
        Plugins:           office-town-plugin + office-town-pack-knowledge
-       Wiki seeded:       <N> concepts in knowledge/
+       Memory:            Goose built-in disabled — wiki MCP replaces it
 
-     Try: @librarian "extract everything I know about my biggest
-     client" — the librarian will walk you through capturing their
-     first wiki entries.
+     Try: @librarian "extract everything I know about my biggest client"
 
 CONSTRAINTS:
 - DO NOT install a different agent host. Goose is the host.
 - DO NOT touch wrangler, pnpm, or your local Cloudflare account from
-  here — the button already did all of that.
+  this prompt — the button already provisioned everything.
 - Ask before editing config.yaml; show me the diff first.
+- 'why:' is REQUIRED on every wiki mutation (write/update/supersede/
+  archive/delete/link/attach). The wiki MCP enforces this for audit.
 </script>
   <script>
     function copyInstallPrompt() {
