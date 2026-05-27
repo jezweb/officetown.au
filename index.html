@@ -39,8 +39,11 @@ section h2 + p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1.05rem;
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
 .card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; }
 .card p { color: var(--muted); font-size: 0.95rem; }
+.pack-card { display: block; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.15s; }
+.pack-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.pack-card h3 { color: var(--accent); }
 .kicker { display: inline-block; background: var(--accent); color: white; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; }
-.shape { font-family: 'SF Mono', Menlo, monospace; font-size: 0.85rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; }
+.shape { font-family: 'SF Mono', Menlo, monospace; font-size: 0.85rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; white-space: pre; line-height: 1.6; }
 .diff-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .diff-table th, .diff-table td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
 .diff-table th { color: var(--muted); font-weight: 500; font-size: 0.85rem; }
@@ -123,7 +126,7 @@ Report 5 worker URLs + token location + town path + monthly cost estimate. Don't
 <section style="padding: 2rem 0;">
   <div class="container" style="text-align: center;">
     <p style="color: var(--muted); font-size: 0.95em;">
-      <strong style="color: var(--fg);">Pro tip:</strong> <code>.town</code> is a real TLD (~$30/yr at Synergy, Hover, Porkbun). Register <code>&lt;yourbusiness&gt;.town</code> and point it at your deployment. Your agent already knows how to wire the DNS.
+      <strong style="color: var(--fg);">Pro tip:</strong> <code>.town</code> is a real TLD — about $30/yr at Cloudflare (Dashboard → Domains → Registration). Register <code>&lt;yourbusiness&gt;.town</code> and your agent already knows how to wire the DNS.
     </p>
   </div>
 </section>
@@ -187,14 +190,14 @@ your-town/
     <p>Domain-specific roles for the work you actually do.</p>
 
     <div class="grid">
-      <div class="card"><h3>Startup</h3><p>investor-relations, customer-success, recruiter, bookkeeper + commitments tracking</p></div>
-      <div class="card"><h3>Design</h3><p>designer, copywriter, video-editor + Remotion-driven MP4</p></div>
-      <div class="card"><h3>Hosting</h3><p>hostmaster, devops + DNS audit, SSL renewal, server health</p></div>
-      <div class="card"><h3>WordPress</h3><p>wordpress-specialist + theme/plugin audit, WooCommerce ops</p></div>
-      <div class="card"><h3>Business</h3><p>estimator, project-manager, marketer, writer + quotes collection</p></div>
-      <div class="card"><h3>Cloudflare</h3><p>Bundles official Cloudflare skills + MCP servers</p></div>
-      <div class="card"><h3>Comms</h3><p>helpdesk, social-poster, newsletter-editor</p></div>
-      <div class="card"><h3>Knowledge</h3><p>17 portable agent concepts + 35 coding gotchas — seed your wiki with hard-won wisdom</p></div>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-startup"><h3>Startup ↗</h3><p>investor-relations, customer-success, recruiter, bookkeeper + commitments tracking</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-design"><h3>Design ↗</h3><p>designer, copywriter, video-editor + Remotion-driven MP4</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-hosting"><h3>Hosting ↗</h3><p>hostmaster, devops + DNS audit, SSL renewal, server health</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-wordpress"><h3>WordPress ↗</h3><p>wordpress-specialist + theme/plugin audit, WooCommerce ops</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-business"><h3>Business ↗</h3><p>estimator, project-manager, marketer, writer + quotes collection</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-cloudflare"><h3>Cloudflare ↗</h3><p>Bundles official Cloudflare skills + MCP servers</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-comms"><h3>Comms ↗</h3><p>helpdesk, social-poster, newsletter-editor</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-knowledge"><h3>Knowledge ↗</h3><p>17 portable agent concepts + 35 coding gotchas — seed your wiki with hard-won wisdom</p></a>
     </div>
   </div>
 </section>
