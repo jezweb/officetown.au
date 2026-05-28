@@ -3,67 +3,258 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Office Town — a markdown methodology for AI agent fleets. 4 buildings, 4 roles, wiki-backed substrate. Built on Cloudflare. Works in Goose.">
-<title>Office Town — AI agents that work like a team</title>
+<meta name="description" content="Office Town gives your AI a memory, a body, and a team — on your own Cloudflare. Open source. Deploy in 5 minutes. Works with Goose.">
+<title>Office Town — give your AI a memory, a body, and a team</title>
+<meta property="og:title" content="Office Town — give your AI a memory, a body, and a team">
+<meta property="og:description" content="A personal cortex on your own Cloudflare. Memory + files + email + cron + voice + code execution. Open source.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://officetown.au">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E🏢%3C/text%3E%3C/svg%3E">
 <style>
 :root {
-  --bg: #fafafa; --fg: #0f172a; --muted: #475569; --accent: #2563eb;
-  --accent-hover: #1d4ed8; --card: #fff; --border: #e2e8f0;
+  --bg: #f7f3e8;
+  --paper: #fefcf6;
+  --ink: #2a2520;
+  --ink-soft: #4a3f33;
+  --muted: #6b5e4f;
+  --muted-faint: #968774;
+  --accent: #c25e4f;
+  --accent-hover: #a04a3c;
+  --accent-soft: rgba(194, 94, 79, 0.08);
+  --border: #d8cdb5;
+  --border-soft: #e8dfcb;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font: 17px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--fg); background: var(--bg); }
+html { scroll-behavior: smooth; }
+body {
+  font: 17px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink-soft);
+  background: var(--bg);
+}
+h1, h2, h3, h4, .serif {
+  font-family: 'Iowan Old Style', 'Palatino', Georgia, serif;
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
 .container { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Nav */
 nav { padding: 1.5rem 0; }
 nav .container { display: flex; align-items: center; justify-content: space-between; }
-nav .logo { font-weight: 700; font-size: 1.2rem; }
+nav .logo {
+  font-family: 'Iowan Old Style', 'Palatino', Georgia, serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--ink);
+  text-decoration: none;
+}
 nav .links { display: flex; gap: 1.5rem; font-size: 0.95rem; }
 nav .links a { color: var(--muted); text-decoration: none; }
-nav .links a:hover { color: var(--fg); }
+nav .links a:hover { color: var(--accent); }
+
+/* Hero */
 .hero { padding: 4rem 0 5rem; text-align: center; }
-.hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
-.hero h1 em { color: var(--accent); font-style: normal; }
-.hero p { font-size: 1.2rem; color: var(--muted); max-width: 640px; margin: 0 auto 2.5rem; }
+.kicker {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 6.5vw, 4.2rem);
+  margin-bottom: 1.25rem;
+}
+.hero h1 em { color: var(--accent); font-style: italic; }
+.hero .tagline {
+  font-size: 1.2rem;
+  color: var(--muted);
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.55;
+}
+
+/* Buttons */
 .cta { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
-.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.95rem; border: 1px solid transparent; transition: all 0.15s; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.98rem;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  cursor: pointer;
+  font-family: inherit;
+}
 .btn-primary { background: var(--accent); color: white; }
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-secondary { background: var(--card); color: var(--fg); border-color: var(--border); }
-.btn-secondary:hover { background: var(--bg); border-color: var(--muted); }
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--border);
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 .btn-ghost { color: var(--muted); }
-.btn-ghost:hover { color: var(--fg); }
+.btn-ghost:hover { color: var(--accent); }
+
+/* Sections */
 section { padding: 4rem 0; }
-section h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.75rem; }
-section h2 + p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
-.grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
-.card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; }
-.card p { color: var(--muted); font-size: 0.95rem; }
-.pack-card { display: block; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.15s; }
-.pack-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+section h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: 0.6rem;
+}
+section h2 + .lead {
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+  font-size: 1.08rem;
+  max-width: 720px;
+}
+
+/* Cards */
+.grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.card {
+  background: var(--paper);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+.card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.card p { color: var(--muted); font-size: 0.96rem; }
+.pack-card { display: block; text-decoration: none; color: inherit; transition: all 0.15s; }
+.pack-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(74, 63, 51, 0.08); }
 .pack-card h3 { color: var(--accent); }
-.kicker { display: inline-block; background: var(--accent); color: white; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; }
-.shape { font-family: 'SF Mono', Menlo, monospace; font-size: 0.85rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; white-space: pre; line-height: 1.6; }
-.diff-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-.diff-table th, .diff-table td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
-.diff-table th { color: var(--muted); font-weight: 500; font-size: 0.85rem; }
-.diff-table .with { color: var(--fg); font-weight: 500; }
-.diff-table .without { color: var(--muted); text-decoration: line-through; opacity: 0.7; }
-footer { padding: 3rem 0 4rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+
+/* What-it-feels-like vignettes */
+.vignette {
+  background: var(--paper);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+.vignette .role {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 0.4rem 0.6rem;
+  background: var(--accent-soft);
+  border-radius: 6px;
+  text-align: center;
+}
+.vignette .you { color: var(--ink-soft); margin-bottom: 0.6rem; font-style: italic; }
+.vignette .response { color: var(--ink-soft); font-size: 0.95rem; }
+.vignette .response code {
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.88em;
+  color: var(--accent);
+}
+
+/* Install */
+.install-step {
+  background: var(--paper);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1rem;
+}
+.install-step h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+.install-step .num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+.install-step p { color: var(--muted); font-size: 0.96rem; margin: 0.4rem 0; }
+.install-step pre {
+  background: #1f1b16;
+  color: #f5ead2;
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  font-size: 0.85em;
+  overflow-x: auto;
+  line-height: 1.5;
+  margin: 0.75rem 0 0.25rem;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.install-step pre .accent { color: #ffa07a; }
+
+/* Shape (folder tree) */
+.shape {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.65;
+}
+.shape .comment { color: var(--muted-faint); }
+
+/* Why */
+.why-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 2rem; }
+.why-item h3 { font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--accent); }
+.why-item p { color: var(--muted); font-size: 0.96rem; }
+
+/* Footer */
+footer { padding: 3rem 0 4rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border-soft); margin-top: 4rem; }
 footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+footer a { color: var(--muted); text-decoration: none; margin-right: 1.25rem; }
+footer a:hover { color: var(--accent); }
+
 @media (max-width: 640px) {
   nav .links { gap: 1rem; font-size: 0.85rem; }
+  .vignette { grid-template-columns: 1fr; }
+  .vignette .role { justify-self: start; padding: 0.3rem 0.55rem; }
+  section { padding: 3rem 0; }
 }
 </style>
 </head>
 <body>
+
 <nav>
   <div class="container">
-    <div class="logo">🏢 Office Town</div>
+    <a class="logo" href="/">🏢 Office Town</a>
     <div class="links">
-      <a href="#how">How</a>
-      <a href="#packs">Packs</a>
+      <a href="#feels">What it feels like</a>
       <a href="#install">Install</a>
+      <a href="#shape">The shape</a>
       <a href="https://github.com/jezweb/office-town">GitHub</a>
     </div>
   </div>
@@ -71,334 +262,208 @@ footer .container { display: flex; flex-wrap: wrap; justify-content: space-betwe
 
 <header class="hero">
   <div class="container">
-    <div class="kicker">v1.0</div>
-    <h1>Goose capabilities <em>that work like a team</em></h1>
-    <p>Office Town adds four addressable roles, a Cloudflare-backed wiki, and a catalogue of role packs to your <a href="https://block.github.io/goose/">Goose</a> installation. Your single Goose chat becomes a team — boss routing work, librarian curating knowledge, worker building, scout scanning.</p>
+    <div class="kicker">open source · runs on your Cloudflare</div>
+    <h1>Give your AI a memory, a body, <em>and a team.</em></h1>
+    <p class="tagline">
+      Most AI assistants forget you the moment you close the tab. Office Town is a personal cortex that remembers everything — your work, your people, your decisions — and gives your AI six concrete capabilities (wiki, files, email, cron, voice, code) plus a team of named specialists you can address by name.
+    </p>
     <div class="cta">
-      <a href="#agent-install" class="btn btn-primary">Paste into your AI agent</a>
-      <a href="https://block.github.io/goose/" class="btn btn-secondary">Get Goose first</a>
+      <a href="#install" class="btn btn-primary">Install in 5 minutes</a>
+      <a href="#feels" class="btn btn-secondary">See what it feels like</a>
     </div>
   </div>
 </header>
 
-<section id="agent-install" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); margin: 2rem 0;">
+<section id="feels" style="background: var(--paper); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);">
   <div class="container">
-    <div class="kicker" style="background: #2563eb;">two steps</div>
-    <h2 style="margin-top: 0;">Click a button, paste a prompt, done</h2>
-    <p>You have <a href="https://block.github.io/goose/">Goose</a> installed already. Cloudflare provisions the backend in one click — D1, R2, Vectorize, Queue, Workers AI, Images, Email Routing — all auto-created from <code>wrangler.jsonc</code>. Then paste a short prompt into any capable AI agent to wire it into Goose. About 7 minutes end-to-end.</p>
+    <h2>What it feels like to use</h2>
+    <p class="lead">A few real interactions you'd have after installing. Each one persists — the next session knows what happened in the last.</p>
 
-    <h3 style="margin-top: 1.75rem; margin-bottom: 0.5rem;">1. Deploy the backend</h3>
-    <div class="cta">
-      <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud" class="btn btn-primary" style="font-size: 1.1em;">🚀 Deploy to Cloudflare</a>
-    </div>
-    <p class="muted" style="font-size: 0.9em; margin-top: 0.5rem;">
-      Cloudflare signs you in (no API token needed) and prompts for one required secret: <code>MCP_BEARER_TOKEN</code>. Generate via <code>openssl rand -hex 32</code>. ~2 minutes — hands you a worker URL.
-    </p>
-
-    <h3 style="margin-top: 1.75rem; margin-bottom: 0.5rem;">2. Wire it into Goose</h3>
-    <div style="position: relative; margin: 0.75rem 0 1rem 0;">
-    <button type="button" id="copy-prompt-btn" onclick="copyInstallPrompt()" style="position: absolute; top: 12px; right: 12px; z-index: 10; padding: 6px 12px; background: #2563eb; color: white; border: 0; border-radius: 6px; font: 600 12px/1 system-ui, sans-serif; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">📋 Copy full prompt</button>
-    <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; padding-top: 3rem; max-height: 360px; overflow-y: auto; font: 13px/1.55 'SF Mono', Menlo, monospace; white-space: pre-wrap;">I want to add Office Town capabilities to my Goose installation.
-
-Office Town is a content bundle (Cloudflare Worker + Goose plugin + template) that installs INTO an existing Goose. NOT a Goose replacement.
-
-I'll provide:
-- My Cloudflare deployment URL (just got it from the Deploy button)
-- My MCP_BEARER_TOKEN (the one I entered in the Cloudflare deploy form)
-- A town folder path (default: ~/Documents/my-town)
-
-GROUND RULES:
-- Be transparent. Say what you're about to do.
-- Ask before destructive ops or any software install.
-- If Goose isn't installed: stop, point me at https://block.github.io/goose/.
-- Don't echo or save credentials. Env vars only.
-
-STEPS:
-
-1. Check Goose is installed (`goose --version`). If not, stop.
-2. curl -s <URL>/health — verify the deployment is reachable.
-3. goose plugin install jezweb/office-town-plugin
-4. goose plugin install jezweb/office-town-pack-knowledge
-5. Wire all 6 MCPs via `goose mcp add` (validates + persists to
-   ~/.config/goose/config.yaml):
-     for name in wiki files email cron voice sandbox; do
-       goose mcp add office-town-$name --transport streamable_http \
-         --url <URL>/mcp/$name --header "Authorization: Bearer <token>"
-     done
-   Disable Goose's built-in `memory` extension — wiki MCP replaces it:
-     goose mcp disable memory
-6. git clone https://github.com/jezweb/office-town <town folder>.
-   Seed wiki/knowledge/ from the office-town-pack-knowledge plugin.
-7. Restart Goose. Smoke test: wiki.create a test entry, wiki.search
-   finds it, @boss "introduce the team" works.
-
-Full prompt with verification checks: see INSTALL.md link below, or
-hit the Copy button — it copies the full ready-to-paste version.</div>
-    </div>
-
-    <div class="cta" style="margin-top: 1rem;">
-      <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md" class="btn btn-primary">Read full prompt on GitHub →</a>
-      <a href="#how" class="btn btn-ghost">or read about the shape →</a>
-    </div>
-
-    <p class="muted" style="font-size: 0.9em; margin-top: 1.5rem;">
-      The agent never touches wrangler — Cloudflare's web flow already
-      handled all the provisioning. Plus a
-      <strong>connect-second-machine</strong> helper in INSTALL.md
-      for laptop+desktop setups.
-    </p>
-
-  </div>
-  <script type="text/plain" id="install-prompt-full">I want to add Office Town capabilities to my Goose installation.
-
-Office Town is a content bundle (one Cloudflare Worker + Goose plugin
-+ town template) that installs INTO an existing Goose. NOT a Goose
-replacement. The Worker hosts 6 MCP servers (wiki, files, email,
-cron, voice, sandbox) plus a dashboard. The plugin adds 4 agent
-roles + skills + recipes.
-
-I'll provide:
-- My Cloudflare deployment URL (from the Deploy button)
-- My MCP_BEARER_TOKEN (entered in the Cloudflare deploy form)
-- A town folder path (default: ~/Documents/my-town)
-
-GROUND RULES:
-- Be transparent. Say what you're about to do.
-- Ask before destructive ops or any software install.
-- If Goose isn't installed: stop, point me at
-  https://block.github.io/goose/.
-- Don't echo or save credentials. Env vars only.
-
-STEPS:
-
-1. Check Goose is installed:
-     goose --version
-   If not, stop and direct me to https://block.github.io/goose/.
-
-2. Verify the deployment URL works:
-     curl -s <URL>/health
-   Should return {"status":"ok","service":"office-town",...}
-
-3. Install the Office Town plugin (Open Plugin Spec — installs to
-   ~/.agents/plugins/):
-     goose plugin install jezweb/office-town-plugin
-     goose plugin install jezweb/office-town-pack-knowledge
-   Verify:
-     goose plugin list
-
-   OPTIONAL — for Cloudflare account ops (DNS, R2, D1 admin):
-     goose plugin install jezweb/office-town-pack-cloudflare
-   This bundles Cloudflare's official MCPs from github.com/cloudflare/mcp.
-
-4. Disable Goose's built-in Memory extension — the wiki MCP replaces
-   it (per docs/MEMORY-COMPARISON.md). Use Goose's CLI:
-     goose mcp disable memory
-   Or in the Desktop UI: Extensions → Memory → toggle off.
-
-5. Wire the 6 Office Town MCPs via `goose mcp add` (NOT raw YAML
-   editing — let Goose validate the config). Same bearer for all six:
-
-     for name in wiki files email cron voice sandbox; do
-       goose mcp add office-town-$name \\
-         --transport streamable_http \\
-         --url <URL>/mcp/$name \\
-         --header "Authorization: Bearer <MCP_BEARER_TOKEN>"
-     done
-
-   Note: `office-town-voice` (the call_* actions) and
-   `office-town-sandbox` (the run action) are v1.1-alpha — they return
-   `status: not_yet_wired` placeholders until the Realtime + Containers
-   bindings land. Their other actions (transcribe, synthesize,
-   list_voices, list_languages) work today.
-
-   If `goose mcp add` isn't available in your Goose version, fall back
-   to editing ~/.config/goose/config.yaml under `extensions:`. Show me
-   the diff before applying.
-
-6. Clone the town template to my chosen folder (default
-   ~/Documents/my-town):
-     git clone https://github.com/jezweb/office-town <town path>
-
-7. Restart Goose (Desktop) or start a fresh CLI session.
-
-8. SMOKE TEST in a fresh Goose chat at the town folder:
-   a. Use the wiki gateway tool:
-        wiki(action: 'write',
-             collection: 'contacts',
-             slug: 'smoke-test',
-             frontmatter: {name: 'Test', kind: 'contact'},
-             body: 'Install smoke test.',
-             why: 'install verification')
-      Should return {slug, uuid, audit_id, ...}.
-   b. wiki(action: 'search', query: 'Test')
-      Should return the smoke-test hit.
-   c. wiki(action: 'list', collection: 'contacts')
-      Should show smoke-test in the list.
-   d. @boss "introduce the team"
-      Should respond coherently mentioning the 4 buildings
-      (office/library/workshop/lookout) and 4 default roles
-      (boss/librarian/worker/scout).
-
-9. Final report:
-
-     Office Town installed for Goose.
-       Deployment URL:    <URL>
-       Town folder:       <path>
-       MCP servers:       office-town-{wiki,files,email,cron,voice,sandbox}
-                          (6 gateway tools, 57 actions total)
-       Plugins:           office-town-plugin + office-town-pack-knowledge
-       Memory:            Goose built-in disabled — wiki MCP replaces it
-       Alpha:             voice.call_* + sandbox.run return placeholders
-                          pending Realtime + Containers wiring (v1.1)
-
-     Try: @librarian "extract everything I know about my biggest client"
-
-CONSTRAINTS:
-- DO NOT install a different agent host. Goose is the host.
-- DO NOT touch wrangler, pnpm, or your local Cloudflare account from
-  this prompt — the button already provisioned everything.
-- Ask before editing config.yaml; show me the diff first.
-- 'why:' is REQUIRED on every wiki mutation (write/update/supersede/
-  archive/delete/link/attach). The wiki MCP enforces this for audit.
-</script>
-  <script>
-    function copyInstallPrompt() {
-      const btn = document.getElementById('copy-prompt-btn');
-      const text = document.getElementById('install-prompt-full').textContent;
-      const ok = (label) => {
-        const orig = btn.innerHTML;
-        btn.innerHTML = label;
-        btn.style.background = '#16a34a';
-        setTimeout(() => { btn.innerHTML = orig; btn.style.background = '#2563eb'; }, 2200);
-      };
-      const fail = () => { btn.innerHTML = '⚠ Copy failed — select manually'; btn.style.background = '#dc2626'; };
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => ok('✓ Copied — paste into your agent')).catch(fail);
-      } else {
-        const ta = document.createElement('textarea');
-        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); ok('✓ Copied'); } catch (e) { fail(); }
-        document.body.removeChild(ta);
-      }
-    }
-  </script>
-</section>
-
-<section style="padding: 2rem 0;">
-  <div class="container" style="text-align: center;">
-    <p style="color: var(--muted); font-size: 0.95em;">
-      <strong style="color: var(--fg);">Pro tip:</strong> <code>.town</code> is a real TLD — about $30/yr at Cloudflare (Dashboard → Domains → Registration). Register <code>&lt;yourbusiness&gt;.town</code> and your agent already knows how to wire the DNS.
-    </p>
-  </div>
-</section>
-
-<section id="how">
-  <div class="container">
-    <h2>The shape</h2>
-    <p>Four buildings. Four core roles. Add role packs as the work demands.</p>
-
-    <div class="shape">
-your-town/
-├── buildings/
-│   ├── office/          # boss — routes work, holds the thread
-│   ├── library/         # librarian — extracts + curates the wiki
-│   ├── workshop/        # worker — deep work
-│   └── lookout/         # scout — outward scanning
-├── wiki/                # the shared substrate
-│   ├── business/        # who you are
-│   ├── owner/           # voice + rhythm
-│   ├── team/            # humans + agents
-│   ├── contacts/        # external people
-│   ├── orgs/            # clients, prospects, vendors
-│   ├── projects/        # active + historical work
-│   ├── decisions/       # why we chose X
-│   ├── knowledge/       # graduated findings
-│   └── tasks/           # what's open, in flight, done
-└── AGENTS.md            # the town's standing orders
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>The roles</h2>
-    <p>Address them by name. Each knows what they do and what they don't.</p>
-
-    <div class="grid">
-      <div class="card">
-        <h3>💬 @boss</h3>
-        <p>Talks to you. Routes work. Holds the thread across sessions. Never does deep work itself.</p>
-      </div>
-      <div class="card">
-        <h3>📚 @librarian</h3>
-        <p>Extracts knowledge from your sources. Curates the wiki. Graduates findings into durable concepts.</p>
-      </div>
-      <div class="card">
-        <h3>⚙️ @worker</h3>
-        <p>Deep work. Building. Research. Ships artefacts. Names trade-offs honestly.</p>
-      </div>
-      <div class="card">
-        <h3>🔭 @scout</h3>
-        <p>Outward-facing. Industry. Tools. World. Surfaces what the inward roles wouldn't notice.</p>
+    <div class="vignette">
+      <div class="role">@librarian</div>
+      <div>
+        <div class="you">"Extract everything I know about Acme Corp — emails I've mentioned them in, projects we've done, the people involved."</div>
+        <div class="response">Pulls the threads, writes a <code>wiki/orgs/acme-corp/entity.md</code> with the people linked to <code>wiki/contacts/</code>, projects linked to <code>wiki/projects/</code>, and an engagement trace of every interaction it found. Future you can just ask <em>"what's the status with Acme?"</em> and it knows.</div>
       </div>
     </div>
-  </div>
-</section>
 
-<section id="packs">
-  <div class="container">
-    <h2>Role packs</h2>
-    <p>Domain-specific roles for the work you actually do.</p>
+    <div class="vignette">
+      <div class="role">@boss</div>
+      <div>
+        <div class="you">"I need to follow up with everyone who got a quote in the last 6 weeks but didn't reply."</div>
+        <div class="response">Queries the wiki, finds the 12 candidates, drafts personalised follow-up emails. You approve each, it sends via your Cloudflare Email Routing. Schedules a 2-week cron to chase any that still haven't replied.</div>
+      </div>
+    </div>
 
-    <div class="grid">
-      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-startup"><h3>Startup ↗</h3><p>investor-relations, customer-success, recruiter, bookkeeper + commitments tracking</p></a>
-      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-design"><h3>Design ↗</h3><p>designer, copywriter, video-editor + Remotion-driven MP4</p></a>
-      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-hosting"><h3>Hosting ↗</h3><p>hostmaster, devops + DNS audit, SSL renewal, server health</p></a>
-      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-wordpress"><h3>WordPress ↗</h3><p>wordpress-specialist + theme/plugin audit, WooCommerce ops</p></a>
-      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-business"><h3>Business ↗</h3><p>estimator, project-manager, marketer, writer + quotes collection</p></a>
-      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-cloudflare"><h3>Cloudflare ↗</h3><p>Bundles official Cloudflare skills + MCP servers</p></a>
-      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-comms"><h3>Comms ↗</h3><p>helpdesk, social-poster, newsletter-editor</p></a>
-      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-knowledge"><h3>Knowledge ↗</h3><p>17 portable agent concepts + 35 coding gotchas — seed your wiki with hard-won wisdom</p></a>
+    <div class="vignette">
+      <div class="role">@worker</div>
+      <div>
+        <div class="you">"Build a one-page proposal for the Acme job using last month's similar project as a template, then save it as a sharable link."</div>
+        <div class="response">Reads <code>wiki/projects/last-similar.md</code>, drafts the proposal, generates a PDF, publishes it at <code>/p/acme-proposal-2026-05</code> on your own domain — no third-party uploads.</div>
+      </div>
+    </div>
+
+    <div class="vignette">
+      <div class="role">@scout</div>
+      <div>
+        <div class="you">"What's new in Cloudflare Workers this month that's relevant to our hosting work?"</div>
+        <div class="response">Scans the changelog, blog, and the bits you flagged as relevant in <code>wiki/knowledge/cloudflare-watch.md</code>. Writes a 5-bullet summary, files it in your knowledge collection, and offers to email it to the team.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="install">
   <div class="container">
-    <h2>Get started</h2>
-    <p>Three steps, ~7 minutes total. The button does the heavy lifting; your AI agent wires it into Goose.</p>
+    <h2>Install in 5 minutes</h2>
+    <p class="lead">Three steps. The first two click through a button; the third is a single line in your terminal.</p>
 
-    <table class="diff-table">
-      <thead><tr><th>Step</th><th>What</th><th>Time</th></tr></thead>
-      <tbody>
-        <tr><td>1.</td><td>Install <a href="https://block.github.io/goose/">Goose</a> if you don't have it (Desktop or CLI, either works)</td><td>~2 min</td></tr>
-        <tr><td>2.</td><td>Click <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud"><strong>Deploy to Cloudflare</strong></a> → sign in, paste a bearer token, click Deploy. Cloudflare provisions D1, R2, Vectorize, Queue, Workers AI, Browser Rendering. Hands you a worker URL.</td><td>~2 min</td></tr>
-        <tr><td>3.</td><td>Paste the prompt from <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md">INSTALL.md</a> into a capable AI agent → it installs the Goose plugin, wires the six MCP servers (wiki, files, email, cron, voice, sandbox) to your worker URL, clones the town template, runs a smoke test.</td><td>~3 min</td></tr>
-      </tbody>
-    </table>
+    <div class="install-step">
+      <h3><span class="num">1</span> Get Goose if you don't have it</h3>
+      <p>Goose is the local agent runtime — free, open source, runs your AI personas. Desktop or CLI, either works.</p>
+      <p><a href="https://block.github.io/goose/" class="btn btn-secondary" style="margin-top: 0.5rem;">Get Goose →</a></p>
+    </div>
 
-    <p class="muted" style="margin-top: 1.5rem;">
-      The agent doing step 3 can be Goose itself, Claude Code, Aider, Cline — anything that can run shell commands and edit YAML. It never touches wrangler or your local toolchain; Cloudflare's web flow handled all of that in step 2.
+    <div class="install-step">
+      <h3><span class="num">2</span> Deploy your Office Town backend</h3>
+      <p>One click. Cloudflare signs you in (no API token), provisions everything — D1, R2, Vectorize, Queues, Workers AI — and gives you a worker URL plus a bearer token to save.</p>
+      <p><a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud" class="btn btn-primary" style="margin-top: 0.5rem;">🚀 Deploy to Cloudflare</a></p>
+      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.75rem;">Free Cloudflare tier handles ~100K MCP calls/day. Most people never pay.</p>
+    </div>
+
+    <div class="install-step">
+      <h3><span class="num">3</span> Wire it into Goose</h3>
+      <p>One line in your terminal. The script bootstraps the Goose CLI if missing, then wires all 6 MCPs into your Goose config.</p>
+      <pre>curl -fsSL <span class="accent">https://YOUR-WORKER.workers.dev/connect.sh</span> | \
+  WORKER_URL=<span class="accent">'https://YOUR-WORKER.workers.dev'</span> \
+  MCP_BEARER=<span class="accent">'YOUR_BEARER_TOKEN'</span> bash</pre>
+      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">After deploying in step 2, your dashboard's <code>/dashboard/connect</code> page hands you this command pre-filled — copy + paste, done. Restart Goose Desktop to pick up the new extensions.</p>
+    </div>
+
+    <p style="margin-top: 2rem; color: var(--muted);">
+      That's the whole install. Open a fresh chat with your Goose and try something from the <a href="#feels" style="color: var(--accent);">examples above</a>.
     </p>
+  </div>
+</section>
 
-    <div style="margin-top: 2rem;">
-      <div class="cta">
-        <a href="https://github.com/jezweb/office-town/blob/main/INSTALL.md" class="btn btn-primary">The install prompt on GitHub</a>
-        <a href="https://block.github.io/goose/" class="btn btn-secondary">Get Goose first</a>
+<section id="shape" style="background: var(--paper); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);">
+  <div class="container">
+    <h2>The shape</h2>
+    <p class="lead">Markdown files on your Cloudflare. Hybrid keyword + semantic search built in. Edit in Obsidian, Goose, the web dashboard, or any text editor — they all talk to the same source of truth.</p>
+
+    <div class="shape">your-cortex/
+├── wiki/
+│   ├── orgs/              <span class="comment"># clients, prospects, vendors</span>
+│   ├── contacts/          <span class="comment"># humans you work with</span>
+│   ├── projects/          <span class="comment"># active + historical work</span>
+│   ├── decisions/         <span class="comment"># why we chose X</span>
+│   ├── knowledge/         <span class="comment"># graduated findings</span>
+│   ├── owner/             <span class="comment"># your voice, rhythm, preferences</span>
+│   ├── team/              <span class="comment"># humans + agent profiles</span>
+│   ├── business/          <span class="comment"># who you are</span>
+│   └── tasks/             <span class="comment"># open, in-flight, done</span>
+├── files/                 <span class="comment"># R2-backed file storage</span>
+└── AGENTS.md              <span class="comment"># your town's standing orders</span></div>
+  </div>
+</section>
+
+<section id="roles">
+  <div class="container">
+    <h2>The team you get</h2>
+    <p class="lead">Four addressable roles, each with a clear scope. Address by name; they coordinate via the shared wiki.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>💬 @boss</h3>
+        <p>Talks to you. Routes work. Holds the thread across sessions. Never does deep work itself — delegates and reports back.</p>
       </div>
+      <div class="card">
+        <h3>📚 @librarian</h3>
+        <p>Extracts knowledge from your sources. Curates the wiki. Graduates findings into durable concepts the rest of the team can rely on.</p>
+      </div>
+      <div class="card">
+        <h3>⚙️ @worker</h3>
+        <p>Deep work. Building. Research. Ships artefacts. Names trade-offs honestly — doesn't gloss over what it's uncertain about.</p>
+      </div>
+      <div class="card">
+        <h3>🔭 @scout</h3>
+        <p>Outward-facing. Industry. Tools. World. Surfaces things the inward-focused roles wouldn't notice. Comes back with what to do about it.</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 2rem; color: var(--muted);">
+      Need more specialists? <a href="#packs" style="color: var(--accent);">Role packs ↓</a> add domain-specific agents — a designer, a hostmaster, a WordPress specialist, an estimator.
+    </p>
+  </div>
+</section>
+
+<section id="packs" style="background: var(--paper); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);">
+  <div class="container">
+    <h2>Role packs</h2>
+    <p class="lead">Domain-specific roles. Install only the ones that match your work — each pack adds a few specialists plus the skills + recipes they use.</p>
+
+    <div class="grid">
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-startup"><h3>Startup ↗</h3><p>investor-relations, customer-success, recruiter, bookkeeper. Commitment tracking.</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-design"><h3>Design ↗</h3><p>designer, copywriter, video-editor. Includes Remotion for programmatic MP4 generation.</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-hosting"><h3>Hosting ↗</h3><p>hostmaster, devops. DNS audits, SSL renewal tracking, server health checks.</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-wordpress"><h3>WordPress ↗</h3><p>wordpress-specialist. Theme/plugin audit, WooCommerce operations, content workflows.</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-business"><h3>Business ↗</h3><p>estimator, project-manager, marketer, writer. Built-in quote collection workflow.</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-cloudflare"><h3>Cloudflare ↗</h3><p>Bundles Cloudflare's official MCP servers — DNS, R2, D1 admin from inside Goose.</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-comms"><h3>Comms ↗</h3><p>helpdesk, social-poster, newsletter-editor.</p></a>
+      <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-knowledge"><h3>Knowledge ↗</h3><p>17 portable agent concepts + 35 coding gotchas. Seeds your wiki with hard-won wisdom.</p></a>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="container">
+    <h2>Why this exists</h2>
+    <p class="lead">Most AI tools are stateless. Office Town treats memory as a first-class substrate, not an afterthought — your data lives on your Cloudflare, in markdown, forever editable, with the AI as one access pattern among several.</p>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <h3>Your data, your account</h3>
+        <p>No third-party SaaS. The wiki + files + cron all live on your own Cloudflare account. Free tier covers ~100K calls/day.</p>
+      </div>
+      <div class="why-item">
+        <h3>Markdown as substrate</h3>
+        <p>Every entry is a plain markdown file with YAML frontmatter. Editable in Obsidian, VSCode, Typora — anywhere. The AI just reads + writes the same files.</p>
+      </div>
+      <div class="why-item">
+        <h3>Hybrid search built in</h3>
+        <p>FTS5 keyword + Vectorize semantic search. Find by exact term or by meaning — both surface the same kinds of insight.</p>
+      </div>
+      <div class="why-item">
+        <h3>Audit trail by default</h3>
+        <p>Every wiki write requires a <code>why:</code> — the reason for the change. You can answer "who changed what, when, and why" without grep-ing logs.</p>
+      </div>
+      <div class="why-item">
+        <h3>Composable, not monolithic</h3>
+        <p>6 MCP servers + 4 roles + opt-in role packs. Start with the backend; layer agent behaviour on top as the work demands.</p>
+      </div>
+      <div class="why-item">
+        <h3>Open source</h3>
+        <p>MIT licensed. Backend, plugins, packs — all on <a href="https://github.com/jezweb" style="color: var(--accent);">GitHub</a>. Fork it, adapt it, ship your own.</p>
+      </div>
+    </div>
+
+    <div class="cta" style="margin-top: 2.5rem;">
+      <a href="#install" class="btn btn-primary">Start installing</a>
+      <a href="https://github.com/jezweb/office-town" class="btn btn-secondary">Read the source</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <div>© 2026 Jezweb Pty Ltd · MIT licensed</div>
+    <div>© 2026 Jezweb Pty Ltd · MIT licensed · <a href="https://officetown.au" style="margin-right: 0; color: var(--muted);">officetown.au</a></div>
     <div>
-      <a href="https://github.com/jezweb/office-town" style="color: var(--muted); margin-right: 1rem;">GitHub</a>
-      <a href="https://jezweb.com.au" style="color: var(--muted);">Built by Jezweb</a>
+      <a href="https://github.com/jezweb/office-town">GitHub</a>
+      <a href="https://github.com/jezweb/office-town-cloud">Backend</a>
+      <a href="https://jezweb.com.au" style="margin-right: 0;">Built by Jezweb</a>
     </div>
   </div>
 </footer>
+
 </body>
 </html>
