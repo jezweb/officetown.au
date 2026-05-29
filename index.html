@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Office Town gives your AI a memory, a body, and a team — on your own Cloudflare. Open source. Deploy in 5 minutes. Works with Goose.">
-<title>Office Town — give your AI a memory, a body, and a team</title>
-<meta property="og:title" content="Office Town — give your AI a memory, a body, and a team">
-<meta property="og:description" content="A personal cortex on your own Cloudflare. Memory + files + email + cron + voice + code execution. Open source.">
+<meta name="description" content="Office Town is your AI's memory in plain sight — plain markdown files on your own Cloudflare you can open in Finder. Memory + files + email + cron + voice + code, plus a team of specialists. Open source. Works with Goose.">
+<title>Office Town — your AI's memory, in plain sight</title>
+<meta property="og:title" content="Office Town — your AI's memory, in plain sight">
+<meta property="og:description" content="A personal cortex on your own Cloudflare — plain markdown you can open in Finder. Empty your filing cabinet into it and watch it learn your business. Open source.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://officetown.au">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E🏢%3C/text%3E%3C/svg%3E">
@@ -263,9 +263,9 @@ footer a:hover { color: var(--accent); }
 <header class="hero">
   <div class="container">
     <div class="kicker">open source · runs on your Cloudflare</div>
-    <h1>Give your AI a memory, a body, <em>and a team.</em></h1>
+    <h1>Your AI's memory, <em>in plain sight.</em></h1>
     <p class="tagline">
-      Most AI assistants forget you the moment you close the tab. Office Town is a personal cortex that remembers everything — your work, your people, your decisions — and gives your AI six concrete capabilities (wiki, files, email, cron, voice, code) plus a team of named specialists you can address by name.
+      Most AI assistants forget you the moment you close the tab — and what they do remember is locked in a black box. Office Town is a personal cortex that remembers your work, your people, your decisions as plain markdown files on your own Cloudflare. You can open every one in Finder. It also gives your AI six real capabilities (wiki, files, email, cron, voice, code) and a team of named specialists. Empty your filing cabinet into it and watch it learn your business.
     </p>
     <div class="cta">
       <a href="#install" class="btn btn-primary">Install in 5 minutes</a>
@@ -332,17 +332,18 @@ footer a:hover { color: var(--accent); }
     </div>
 
     <div class="install-step">
-      <h3><span class="num">3</span> Wire it into Goose</h3>
-      <p>One line in your terminal. The script bootstraps the Goose CLI if missing, then wires all 6 MCPs into your Goose config.</p>
+      <h3><span class="num">3</span> Run one line in your terminal</h3>
+      <p>It installs the Goose CLI + plugin if needed, wires the 6 MCPs, and creates your cortex as a real folder at <code>~/OfficeTown/</code> — synced both ways with your Cloudflare.</p>
       <pre>curl -fsSL <span class="accent">https://YOUR-WORKER.workers.dev/connect.sh</span> | \
   WORKER_URL=<span class="accent">'https://YOUR-WORKER.workers.dev'</span> \
   MCP_BEARER=<span class="accent">'YOUR_BEARER_TOKEN'</span> bash</pre>
-      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">After deploying in step 2, your dashboard's <code>/dashboard/connect</code> page hands you this command pre-filled — copy + paste, done. Restart Goose Desktop to pick up the new extensions.</p>
+      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">After step 2, your dashboard's <code>/dashboard/connect</code> page hands you this pre-filled — copy, paste, done.</p>
     </div>
 
-    <p style="margin-top: 2rem; color: var(--muted);">
-      That's the whole install. Open a fresh chat with your Goose and try something from the <a href="#feels" style="color: var(--accent);">examples above</a>.
-    </p>
+    <div class="install-step" style="background: var(--accent-soft); border-color: var(--accent);">
+      <h3><span class="num">✓</span> Then just say hi</h3>
+      <p>Quit and reopen Goose Desktop so it loads the new extensions. Open a fresh chat and type <strong>"hi"</strong> — an agent welcomes you and offers a few ways to start. The fastest: drop a pile of your real documents into <code>~/OfficeTown/inbox/</code> and ask it to go through them. It'll read everything and learn your business.</p>
+    </div>
   </div>
 </section>
 
