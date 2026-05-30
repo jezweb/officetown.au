@@ -238,6 +238,15 @@ footer .container { display: flex; flex-wrap: wrap; justify-content: space-betwe
 footer a { color: var(--muted); text-decoration: none; margin-right: 1.25rem; }
 footer a:hover { color: var(--accent); }
 
+/* App screenshots */
+.shots { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 2rem; }
+figure.shot { margin: 0; }
+figure.shot img { width: 100%; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 6px 22px rgba(74, 63, 51, 0.10); display: block; background: var(--paper); }
+figure.shot figcaption { color: var(--muted); font-size: 0.92rem; margin-top: 0.65rem; line-height: 1.5; }
+figure.shot figcaption strong { color: var(--ink); font-weight: 600; }
+figure.shot figcaption code { background: var(--bg); border: 1px solid var(--border-soft); padding: 1px 5px; border-radius: 3px; font-size: 0.86em; color: var(--accent); }
+.shots-wide { grid-template-columns: 1fr; max-width: 760px; }
+
 @media (max-width: 640px) {
   nav .links { gap: 1rem; font-size: 0.85rem; }
   .vignette { grid-template-columns: 1fr; }
@@ -252,9 +261,9 @@ footer a:hover { color: var(--accent); }
   <div class="container">
     <a class="logo" href="/">🏢 Office Town</a>
     <div class="links">
-      <a href="#feels">What it feels like</a>
+      <a href="#apps">Apps</a>
+      <a href="#industry-packs">Packs</a>
       <a href="#install">Install</a>
-      <a href="#shape">The shape</a>
       <a href="https://github.com/jezweb/office-town">GitHub</a>
     </div>
   </div>
@@ -265,7 +274,7 @@ footer a:hover { color: var(--accent); }
     <div class="kicker">open source · runs on your Cloudflare</div>
     <h1>Your AI's memory, <em>in plain sight.</em></h1>
     <p class="tagline">
-      Most AI assistants forget you the moment you close the tab — and what they do remember is locked in a black box. Office Town is a personal cortex that remembers your work, your people, your decisions as plain markdown files on your own Cloudflare. You can open every one in Finder. It also gives your AI six real capabilities (wiki, files, email, cron, voice, code) and a team of named specialists. Empty your filing cabinet into it and watch it learn your business.
+      Most AI assistants forget you the moment you close the tab — and what they do remember is locked in a black box. Office Town is a personal cortex that remembers your work, your people, your decisions as plain markdown files on your own Cloudflare. You can open every one in Finder. It gives your AI seven real capabilities — memory, files, email, cron, voice, code, and interactive apps — plus a team of named specialists. Empty your filing cabinet into it and watch it learn your business.
     </p>
     <div class="cta">
       <a href="#install" class="btn btn-primary">Install in 5 minutes</a>
@@ -309,6 +318,60 @@ footer a:hover { color: var(--accent); }
         <div class="you">"What's new in Cloudflare Workers this month that's relevant to our hosting work?"</div>
         <div class="response">Scans the changelog, blog, and the bits you flagged as relevant in <code>wiki/knowledge/cloudflare-watch.md</code>. Writes a 5-bullet summary, files it in your knowledge collection, and offers to email it to the team.</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="apps">
+  <div class="container">
+    <h2>Apps your agent opens — or builds</h2>
+    <p class="lead">Office Town ships interactive apps that run as windows inside Goose Desktop — a task board, a quote-to-cash flow, a mini-CRM, an on-site quoter, a bookings calendar, and more. You click and type directly; they save straight to your cortex. The agent can open one for you, build a brand-new one on request, or share a customer-facing one behind a magic link.</p>
+
+    <div class="shots">
+      <figure class="shot">
+        <img src="/img/app-quote-to-cash.png" alt="Quote to Cash app — a pipeline of deals from draft to paid">
+        <figcaption><strong>Quote to Cash</strong> — line-item quotes → job → invoice → paid, with a money dashboard. Each deal is a real file in your <code>jobs</code> collection.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/img/app-mini-crm.png" alt="Mini-CRM Today view with open pipeline value and follow-ups">
+        <figcaption><strong>Mini-CRM</strong> — pipeline, contacts, follow-ups and a “what needs me today” triage, all a view over your real <code>contacts</code>.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/img/app-run-sheet.png" alt="Run sheet app showing today's jobs with tap-to-call">
+        <figcaption><strong>Run sheet</strong> — today’s jobs, tap-to-call and tap-to-map, a status that cycles To&nbsp;do → On&nbsp;site → Done.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/img/app-showcase.png" alt="Capabilities app generating an image and dictating by voice">
+        <figcaption><strong>Generative UI</strong> — apps theme themselves, chart data, take photo uploads, transcribe your voice, even generate images with Workers AI.</figcaption>
+      </figure>
+    </div>
+
+    <div class="why-grid" style="margin-top: 2.5rem;">
+      <div class="why-item"><h3>Direct manipulation</h3><p>Click a field, overtype it, it saves. No “hey AI, change the phone number.”</p></div>
+      <div class="why-item"><h3>Agent-authored</h3><p>Ask for a tracker or tool and the agent writes a self-contained app and installs it to your Apps page.</p></div>
+      <div class="why-item"><h3>Magic-link share</h3><p>An agent can publish a one-off customer app — a feedback form, a quote approval — behind a public link that writes straight back to your inbox.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="industry-packs" style="background: var(--paper); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);">
+  <div class="container">
+    <h2>Industry packs</h2>
+    <p class="lead">Tell your agent what you do — “I’m a sparkie” — or pick one in the dashboard, and the matching pack sets your town up for that trade in one move: it registers the collections that line of work needs and installs the apps to match.</p>
+
+    <div class="shots shots-wide">
+      <figure class="shot">
+        <img src="/img/dashboard-packs.png" alt="Packs page in the Office Town dashboard, one-click install">
+        <figcaption>One click registers the collections and installs the apps — your agent can do it for you when you describe your business.</figcaption>
+      </figure>
+    </div>
+
+    <div class="grid" style="margin-top: 2rem;">
+      <div class="card"><h3>Trades</h3><p>Run sheet, on-site quoting, quote-to-cash, asset register — plus <code>jobs</code>, <code>sites</code>, <code>price-list</code>.</p></div>
+      <div class="card"><h3>Professional services</h3><p>Compliance deadlines, mini-CRM, request tracker, decision log — plus <code>engagements</code>, <code>deadlines</code>.</p></div>
+      <div class="card"><h3>Creative</h3><p>Bookings calendar, deliverables tracker, project CRM — for studios, photographers, designers.</p></div>
+      <div class="card"><h3>Web agency</h3><p>Asset/renewal register, support tickets, deliverables, decision log.</p></div>
+      <div class="card"><h3>Bookings &amp; services</h3><p>Calendar, mini-CRM and quoting for any appointment business — salons, tutors, allied health.</p></div>
     </div>
   </div>
 </section>
@@ -393,15 +456,15 @@ footer a:hover { color: var(--accent); }
     </div>
 
     <p style="margin-top: 2rem; color: var(--muted);">
-      Need more specialists? <a href="#packs" style="color: var(--accent);">Role packs ↓</a> add domain-specific agents — a designer, a hostmaster, a WordPress specialist, an estimator.
+      Need more specialists? <a href="#role-packs" style="color: var(--accent);">Agent role packs ↓</a> add domain-specific agents — a designer, a hostmaster, a WordPress specialist, an estimator.
     </p>
   </div>
 </section>
 
-<section id="packs" style="background: var(--paper); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);">
+<section id="role-packs" style="background: var(--paper); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);">
   <div class="container">
-    <h2>Role packs</h2>
-    <p class="lead">Domain-specific roles. Install only the ones that match your work — each pack adds a few specialists plus the skills + recipes they use.</p>
+    <h2>Agent role packs</h2>
+    <p class="lead">Domain-specific <em>agents</em> (distinct from the industry app packs above). Install only the ones that match your work — each adds a few specialists plus the skills + recipes they use.</p>
 
     <div class="grid">
       <a class="card pack-card" href="https://github.com/jezweb/office-town-pack-startup"><h3>Startup ↗</h3><p>investor-relations, customer-success, recruiter, bookkeeper. Commitment tracking.</p></a>
@@ -440,7 +503,11 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="why-item">
         <h3>Composable, not monolithic</h3>
-        <p>6 MCP servers + 4 roles + opt-in role packs. Start with the backend; layer agent behaviour on top as the work demands.</p>
+        <p>7 MCP servers + 4 roles + opt-in app &amp; role packs. Start with the backend; layer apps and agents on top as the work demands.</p>
+      </div>
+      <div class="why-item">
+        <h3>Generative interfaces</h3>
+        <p>Apps are markdown-and-HTML the agent can write on demand — a real UI for a single moment or a single customer, backed by your own cortex, not a rigid SaaS.</p>
       </div>
       <div class="why-item">
         <h3>Open source</h3>
