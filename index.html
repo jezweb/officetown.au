@@ -277,7 +277,7 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
       Most AI assistants forget you the moment you close the tab — and what they do remember is locked in a black box. Office Town is a personal cortex that remembers your work, your people, your decisions as plain markdown files on your own Cloudflare. You can open every one in Finder. It gives your AI seven real capabilities — memory, files, email, cron, voice, code, and interactive apps — plus a team of named specialists. Empty your filing cabinet into it and watch it learn your business.
     </p>
     <div class="cta">
-      <a href="#install" class="btn btn-primary">Install in 5 minutes</a>
+      <a href="#install" class="btn btn-primary">Install with Goose</a>
       <a href="#feels" class="btn btn-secondary">See what it feels like</a>
     </div>
   </div>
@@ -378,8 +378,8 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
 
 <section id="install">
   <div class="container">
-    <h2>Install in 5 minutes</h2>
-    <p class="lead">Three steps. The first two click through a button; the third is a single line in your terminal.</p>
+    <h2>Install with Goose</h2>
+    <p class="lead">Goose installs Office Town for you — it provisions your Cloudflare backend, wires this Mac, and seeds your cortex. One recipe, or three steps by hand.</p>
 
     <div class="install-step">
       <h3><span class="num">1</span> Get Goose if you don't have it</h3>
@@ -388,19 +388,23 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
     </div>
 
     <div class="install-step">
-      <h3><span class="num">2</span> Deploy your Office Town backend</h3>
-      <p>One click. Cloudflare signs you in (no API token), provisions everything — D1, R2, Vectorize, Queues, Workers AI — and gives you a worker URL plus a bearer token to save.</p>
-      <p><a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud" class="btn btn-primary" style="margin-top: 0.5rem;">🚀 Deploy to Cloudflare</a></p>
-      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.75rem;">Free Cloudflare tier handles ~100K MCP calls/day. Most people never pay.</p>
+      <h3><span class="num">2</span> Let Goose stand up your backend</h3>
+      <p>Clone the repo and run the install recipe. Goose follows the <code>setup-office-town</code> skill — provisions D1, R2, Vectorize, Queues, Workers AI, Email and the sandbox container on <em>your</em> Cloudflare, then deploys.</p>
+      <pre>git clone https://github.com/jezweb/office-town-cloud
+cd office-town-cloud
+export CLOUDFLARE_API_TOKEN=<span class="accent">'your-token'</span>
+goose run --recipe recipes/install-office-town.yaml \
+  --params account_id=<span class="accent">your-account-id</span> pack=ask</pre>
+      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.75rem;">Needs a Cloudflare account on Workers Paid and Docker running for the first build. Prefer to do the cloud half yourself? <code>npm install &amp;&amp; bash scripts/provision.sh</code>.</p>
     </div>
 
     <div class="install-step">
-      <h3><span class="num">3</span> Run one line in your terminal</h3>
-      <p>It installs the Goose CLI + plugin if needed, wires the 7 MCPs, auto-installs the apps to your Goose Apps page, and creates your cortex as a real folder at <code>~/OfficeTown/</code> — synced both ways with your Cloudflare.</p>
+      <h3><span class="num">3</span> It wires this Mac for you</h3>
+      <p>The recipe runs your worker's own one-line installer next — it wires the 7 MCPs into Goose, auto-installs the apps to your Apps page, adds OfficeCLI for Word/Excel/PowerPoint, and creates your cortex as a real folder at <code>~/OfficeTown/</code>, synced both ways with your Cloudflare.</p>
       <pre>curl -fsSL <span class="accent">https://YOUR-WORKER.workers.dev/connect.sh</span> | \
   WORKER_URL=<span class="accent">'https://YOUR-WORKER.workers.dev'</span> \
   MCP_BEARER=<span class="accent">'YOUR_BEARER_TOKEN'</span> bash</pre>
-      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">After step 2, your dashboard's <code>/dashboard/connect</code> page hands you this pre-filled — copy, paste, done.</p>
+      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">Doing it by hand? Your dashboard's <code>/dashboard/connect</code> page hands you this line pre-filled — copy, paste, done.</p>
     </div>
 
     <div class="install-step" style="background: var(--accent-soft); border-color: var(--accent);">
