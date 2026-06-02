@@ -385,7 +385,7 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
       <h3><span class="num">1</span> Get Goose and point it at a capable model</h3>
       <p>Goose is the local agent runtime — free, open source. Desktop or CLI, either works. Connect it to a strong model (Claude or GPT-class via OpenRouter); the install reads a long skill and makes real judgement calls, so don't hand it a budget model.</p>
       <p><a href="https://block.github.io/goose/" class="btn btn-secondary" style="margin-top: 0.5rem;">Get Goose →</a></p>
-      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.85rem;">You'll also need, before you start: a Cloudflare account on <strong>Workers Paid</strong> (Containers + Browser Rendering aren't free-tier), a <strong>Workers-deploy API token</strong> and the account id for it, <strong>Docker running</strong> (the first deploy builds the sandbox container), plus Node + git.</p>
+      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.85rem;">You'll also need, before you start: a <strong>Cloudflare account</strong> (the default install is <strong>free-tier</strong> — no paid plan, no Docker), a <strong>Workers-deploy API token</strong> and the account id for it, plus Node + git. The optional cloud code sandbox is the only extra — it needs Workers Paid + Docker, and most people skip it (a local Goose agent already runs code).</p>
     </div>
 
     <div class="install-step">
@@ -401,6 +401,7 @@ cortex, and verify.
 Cloudflare account id: <span class="accent">your-account-id</span>
 My Workers-deploy token is in the CLOUDFLARE_API_TOKEN env var.
 Industry pack: ask
+Code sandbox: off (free-tier default — only add it if I ask)
 
 Check with me before anything irreversible or account-level.</pre>
       <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.85rem;">Prefer the command line? Clone the repo and run the recipe instead — Goose follows the same skill:</p>
@@ -412,7 +413,7 @@ goose run --recipe recipes/install-office-town.yaml \
 
     <div class="install-step" style="background: var(--accent-soft); border-color: var(--accent);">
       <h3><span class="num">✓</span> Then just say hi</h3>
-      <p>By the time the agent's done it's wired the 7 MCPs into Goose, installed the apps to your Apps page, added OfficeCLI for Word/Excel/PowerPoint, and created your cortex as a real folder at <code>~/OfficeTown/</code>, synced both ways with your Cloudflare. Quit and reopen Goose Desktop so it loads the new extensions, open a fresh chat, and type <strong>"hi"</strong> — an agent welcomes you and offers a few ways to start. The fastest: drop a pile of your real documents into <code>~/OfficeTown/inbox/</code> and ask it to go through them. It'll read everything and learn your business.</p>
+      <p>By the time the agent's done it's wired the office-town MCPs into Goose, installed the apps to your Apps page, added OfficeCLI for Word/Excel/PowerPoint, and created your cortex as a real folder at <code>~/OfficeTown/</code>, synced both ways with your Cloudflare. Quit and reopen Goose Desktop so it loads the new extensions, open a fresh chat, and type <strong>"hi"</strong> — an agent welcomes you and offers a few ways to start. The fastest: drop a pile of your real documents into <code>~/OfficeTown/inbox/</code> and ask it to go through them. It'll read everything and learn your business.</p>
     </div>
   </div>
 </section>
@@ -510,7 +511,7 @@ goose run --recipe recipes/install-office-town.yaml \
       </div>
       <div class="why-item">
         <h3>Composable, not monolithic</h3>
-        <p>7 MCP servers + 4 roles + opt-in app &amp; role packs. Start with the backend; layer apps and agents on top as the work demands.</p>
+        <p>MCP servers + 4 roles + opt-in app &amp; role packs. Start with the free-tier backend; layer apps, agents and the optional code sandbox on top as the work demands.</p>
       </div>
       <div class="why-item">
         <h3>Generative interfaces</h3>
