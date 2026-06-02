@@ -277,7 +277,7 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
       Most AI assistants forget you the moment you close the tab — and what they do remember is locked in a black box. Office Town is a personal cortex that remembers your work, your people, your decisions as plain markdown files on your own Cloudflare. You can open every one in Finder. It gives your AI seven real capabilities — memory, files, email, cron, voice, code, and interactive apps — plus a team of named specialists. Empty your filing cabinet into it and watch it learn your business.
     </p>
     <div class="cta">
-      <a href="#install" class="btn btn-primary">Install with Goose</a>
+      <a href="#install" class="btn btn-primary">Install — deploy to your Cloudflare</a>
       <a href="#feels" class="btn btn-secondary">See what it feels like</a>
     </div>
   </div>
@@ -378,43 +378,37 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
 
 <section id="install">
   <div class="container">
-    <h2>Install with Goose</h2>
-    <p class="lead">Install Goose, set one token, paste one prompt. A Goose agent provisions your Cloudflare backend, wires this Mac, installs the apps, and seeds your cortex — following the <code>setup-office-town</code> skill end to end, and checking in with you before anything account-level.</p>
+    <h2>Install</h2>
+    <p class="lead">Two free accounts, one button, one paste. Deploy the backend to your own Cloudflare with a single click, then paste one line to wire it into Goose. No API token, no Docker.</p>
 
     <div class="install-step">
-      <h3><span class="num">1</span> Get Goose and point it at a capable model</h3>
-      <p>Goose is the local agent runtime — free, open source. Desktop or CLI, either works. Connect it to a strong model (Claude or GPT-class via OpenRouter); the install reads a long skill and makes real judgement calls, so don't hand it a budget model.</p>
+      <h3><span class="num">1</span> Get the two accounts + Goose</h3>
+      <p>You'll need a free <strong>Cloudflare account</strong> and a <strong>GitHub account</strong> — the deploy button puts your own copy of the backend on your GitHub and deploys it to your Cloudflare. (Can't set those up? Ask whoever looks after your tech to run this once — it's a five-minute job for them.)</p>
+      <p>And <strong>Goose</strong> — the local agent runtime, free and open source. Desktop or CLI, pointed at a capable model via OpenRouter.</p>
       <p><a href="https://block.github.io/goose/" class="btn btn-secondary" style="margin-top: 0.5rem;">Get Goose →</a></p>
-      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.85rem;">You'll also need, before you start: a <strong>Cloudflare account</strong> (the default install is <strong>free-tier</strong> — no paid plan, no Docker), a <strong>Workers-deploy API token</strong> and the account id for it, plus Node + git. The optional cloud code sandbox is the only extra — it needs Workers Paid + Docker, and most people skip it (a local Goose agent already runs code).</p>
     </div>
 
     <div class="install-step">
-      <h3><span class="num">2</span> Set your token, then paste the prompt</h3>
-      <p>In a terminal on the box, export your Cloudflare token. Then open Goose and paste the prompt — the agent clones the installer, follows the skill, and does the rest.</p>
-      <pre>export CLOUDFLARE_API_TOKEN=<span class="accent">'your-workers-deploy-token'</span></pre>
-      <pre>Install Office Town on this Mac. The installer lives at
-github.com/jezweb/office-town-cloud — clone it and follow
-skills/setup-office-town/SKILL.md end to end: provision the
-Cloudflare worker, wire this Mac, install OfficeCLI, seed the
-cortex, and verify.
+      <h3><span class="num">2</span> Deploy the backend — one click</h3>
+      <p>Click the button. Cloudflare signs you in, clones the backend to your GitHub, provisions D1 + R2 + Vectorize + Queue + Workers AI, and deploys it — all on Cloudflare's own build infra, so <strong>no API token and no Docker</strong>.</p>
+      <p style="margin: 0.9rem 0;"><a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" style="height: 36px;"></a></p>
+      <p>Two fields to fill in the deploy form: Vectorize <strong>Dimensions <code>768</code></strong> and <strong>Metric <code>cosine</code></strong>. Leave everything else blank — the worker mints its own access token on first run. ~2-3 minutes later you'll have your worker URL.</p>
+      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">Free-tier by default — no paid plan. (The optional cloud code sandbox is the one feature that needs Workers Paid; a local Goose agent already runs code without it.)</p>
+    </div>
 
-Cloudflare account id: <span class="accent">your-account-id</span>
-My Workers-deploy token is in the CLOUDFLARE_API_TOKEN env var.
-Industry pack: ask
-Code sandbox: off (free-tier default — only add it if I ask)
-
-Check with me before anything irreversible or account-level.</pre>
-      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.85rem;">Prefer the command line? Clone the repo and run the recipe instead — Goose follows the same skill:</p>
-      <pre>git clone https://github.com/jezweb/office-town-cloud && cd office-town-cloud
-goose run --recipe recipes/install-office-town.yaml \
-  --params account_id=<span class="accent">your-account-id</span> pack=ask</pre>
-      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">Driving every step by hand? The <a href="https://github.com/jezweb/office-town-cloud/blob/main/INSTALL.md" style="color: var(--accent);">full install guide</a> walks the manual cloud + connect path.</p>
+    <div class="install-step">
+      <h3><span class="num">3</span> Wire it into Goose — one paste</h3>
+      <p>Open <code>&lt;your-worker-url&gt;/dashboard/connect</code>, click <strong>Claim this install</strong>, then copy the pre-filled one-liner and paste it into a terminal. It bootstraps the Goose CLI if needed, wires the MCPs into Goose, installs the apps + the <code>officetowd</code> sync daemon, and creates your cortex folder at <code>~/OfficeTown/</code>.</p>
     </div>
 
     <div class="install-step" style="background: var(--accent-soft); border-color: var(--accent);">
       <h3><span class="num">✓</span> Then just say hi</h3>
-      <p>By the time the agent's done it's wired the office-town MCPs into Goose, installed the apps to your Apps page, added OfficeCLI for Word/Excel/PowerPoint, and created your cortex as a real folder at <code>~/OfficeTown/</code>, synced both ways with your Cloudflare. Quit and reopen Goose Desktop so it loads the new extensions, open a fresh chat, and type <strong>"hi"</strong> — an agent welcomes you and offers a few ways to start. The fastest: drop a pile of your real documents into <code>~/OfficeTown/inbox/</code> and ask it to go through them. It'll read everything and learn your business.</p>
+      <p>Quit and reopen Goose Desktop so it loads the new extensions, open a fresh chat, and type <strong>"hi"</strong> — an agent welcomes you and offers a few ways to start. The fastest: drop a pile of your real documents into <code>~/OfficeTown/inbox/</code> and ask it to go through them. It'll read everything and learn your business.</p>
     </div>
+
+    <p style="font-size: 0.9em; color: var(--muted); margin-top: 1.5rem;">
+      <strong>Prefer an agent to drive the whole thing — or installing onto a client's account headless?</strong> Skip the button: <code>wrangler login</code> (or a scoped API token) plus one pasted prompt lets a Goose agent provision and wire everything itself — see the <a href="https://github.com/jezweb/office-town-cloud/blob/main/INSTALL.md" style="color: var(--accent);">install guide</a>. If the deploy button ever errors with “failed to get repository contents”, use that agent path instead.
+    </p>
   </div>
 </section>
 
