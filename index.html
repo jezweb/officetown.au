@@ -406,6 +406,25 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
       <p>Quit and reopen Goose Desktop so it loads the new extensions, open a fresh chat, and type <strong>"hi"</strong> — an agent welcomes you and offers a few ways to start. The fastest: drop a pile of your real documents into <code>~/OfficeTown/inbox/</code> and ask it to go through them. It'll read everything and learn your business.</p>
     </div>
 
+    <div class="install-step">
+      <h3>What to install</h3>
+      <p style="margin-bottom: 0.5rem;"><strong>Need</strong> — to get going:</p>
+      <ul style="margin: 0 0 1.1rem 1.1rem; color: var(--muted); font-size: 0.96rem; line-height: 1.75;">
+        <li>A free <strong>Cloudflare</strong> account and a <strong>GitHub</strong> account (sign-ups, not installs)</li>
+        <li><a href="https://block.github.io/goose/" style="color: var(--accent);">Goose Desktop</a> — the app the town's interactive apps run inside</li>
+        <li>A model provider in Goose — an <a href="https://goose-docs.ai/docs/getting-started/providers" style="color: var(--accent);">OpenRouter</a> API key is the easy pick (one key, every model)</li>
+        <li>The <strong>Goose CLI</strong> — you don't install this yourself; the connect step adds it for you (it runs the background cron + workflows)</li>
+      </ul>
+      <p style="margin-bottom: 0.5rem;"><strong>Nice to have</strong> — handy once you're working, add any time:</p>
+      <ul style="margin: 0 0 0 1.1rem; color: var(--muted); font-size: 0.96rem; line-height: 1.75;">
+        <li><a href="https://obsidian.md" style="color: var(--accent);">Obsidian</a> or <a href="https://code.visualstudio.com" style="color: var(--accent);">VS Code</a> — your cortex is plain markdown in <code>~/OfficeTown/</code>, so edit it in a real editor</li>
+        <li><strong>OfficeCLI</strong> — read &amp; write Word, Excel and PowerPoint (just ask your agent to add it)</li>
+        <li>The <strong>Cloudflare role pack</strong> — manage DNS, R2 and D1 from inside Goose</li>
+        <li><strong>Browser automation + web-search</strong> Goose extensions — give the agent more reach online</li>
+        <li><strong>Docker</strong> — only if you want the optional cloud code sandbox (most people don't)</li>
+      </ul>
+    </div>
+
     <p style="font-size: 0.9em; color: var(--muted); margin-top: 1.5rem;">
       <strong>Prefer an agent to drive the whole thing — or installing onto a client's account headless?</strong> Skip the button: <code>wrangler login</code> (or a scoped API token) plus one pasted prompt lets a Goose agent provision and wire everything itself — see the <a href="https://github.com/jezweb/office-town-cloud/blob/main/INSTALL.md" style="color: var(--accent);">install guide</a>. If the deploy button ever errors with “failed to get repository contents”, use that agent path instead.
     </p>
