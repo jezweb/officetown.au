@@ -379,13 +379,14 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
 <section id="install">
   <div class="container">
     <h2>Install</h2>
-    <p class="lead">Two free accounts, one button, one paste. Deploy the backend to your own Cloudflare with a single click, then paste one line to wire it into Goose. No API token, no Docker.</p>
+    <p class="lead">Two accounts, one button, one paste. Deploy the backend to your own Cloudflare with a single click, then paste one line to wire it into Goose. No API token, no Docker — just a card on your Cloudflare account (usage stays free-tier).</p>
 
     <div class="install-step">
       <h3><span class="num">0</span> What you'll need</h3>
       <p style="margin-bottom: 0.5rem;"><strong>Need</strong> — before you start:</p>
       <ul style="margin: 0 0 1.1rem 1.1rem; color: var(--muted); font-size: 0.96rem; line-height: 1.75;">
-        <li>A free <strong>Cloudflare</strong> account and a <strong>GitHub</strong> account (sign-ups, not installs) — the button puts your own copy of the backend on GitHub and deploys it to your Cloudflare. Can't set those up? Ask whoever looks after your tech to run this once — it's a five-minute job for them.</li>
+        <li>A <strong>Cloudflare</strong> account and a <strong>GitHub</strong> account (sign-ups, not installs) — the button puts your own copy of the backend on GitHub and deploys it to your Cloudflare. Can't set those up? Ask whoever looks after your tech to run this once — it's a five-minute job for them.</li>
+        <li>A <strong>payment method on your Cloudflare account</strong> — Cloudflare asks for a card to switch on <strong>R2</strong> (your cortex storage) and <strong>Browser Rendering</strong>. Normal use stays inside the free tiers (~$0 at typical volume), so you're enabling the services, not committing to a bill — but the card is required before the deploy will work.</li>
         <li><a href="https://block.github.io/goose/" style="color: var(--accent);">Goose Desktop</a> — the local agent runtime the town's interactive apps run inside.</li>
         <li>A <strong>model</strong> for Goose to think with — open Goose's settings and add a provider; an <a href="https://goose-docs.ai/docs/getting-started/providers" style="color: var(--accent);">OpenRouter</a> API key is the easy pick (one key, every model). Without it the final "hi" has nothing to answer with.</li>
         <li>The <strong>Goose CLI</strong> — you don't install this yourself; the connect step adds it for you (it runs the background cron + workflows).</li>
@@ -406,7 +407,7 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
       <p>Click the button. Cloudflare signs you in, clones the backend to your GitHub, provisions D1 + R2 + Vectorize + Queue + Workers AI, and deploys it — all on Cloudflare's own build infra, so <strong>no API token and no Docker</strong>.</p>
       <p style="margin: 0.9rem 0;"><a href="https://deploy.workers.cloudflare.com/?url=https://github.com/jezweb/office-town-cloud"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" style="height: 36px;"></a></p>
       <p>Two fields to fill in the deploy form: Vectorize <strong>Dimensions <code>768</code></strong> and <strong>Metric <code>cosine</code></strong>. Leave everything else blank — the worker mints its own access token on first run. ~2-3 minutes later you'll have your worker URL.</p>
-      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">Free-tier by default — no paid plan. (The optional cloud code sandbox is the one feature that needs Workers Paid; a local Goose agent already runs code without it.)</p>
+      <p style="font-size: 0.88em; color: var(--muted-faint); margin-top: 0.5rem;">Make sure you've added a payment method to Cloudflare first (it's needed to enable R2 + Browser Rendering — see Step 0); otherwise the deploy stops partway. Usage sits inside the free tiers at normal volume. The optional cloud code sandbox is the one feature that needs the full Workers Paid plan on top — most people skip it.</p>
     </div>
 
     <div class="install-step">
