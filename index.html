@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Office Town is your AI's memory in plain sight — plain markdown files on your own Cloudflare you can open in Finder. Memory + files + email + cron + voice + code, plus a team of specialists. Open source. Works with Goose.">
-<title>Office Town — your AI's memory, in plain sight</title>
-<meta property="og:title" content="Office Town — your AI's memory, in plain sight">
-<meta property="og:description" content="A personal cortex on your own Cloudflare — plain markdown you can open in Finder. Empty your filing cabinet into it and watch it learn your business. Open source.">
+<meta name="description" content="Office Town is a place your AI team works from — open Goose in your town and named teammates are already there, remembering your work as plain markdown on your own Cloudflare you can open in Finder. Open source.">
+<title>Office Town — a town your AI team works from</title>
+<meta property="og:title" content="Office Town — a town your AI team works from">
+<meta property="og:description" content="A place you go into to work, with named AI teammates who remember everything as plain markdown on your own Cloudflare. Open source. Runs in Goose.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://officetown.au">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E🏢%3C/text%3E%3C/svg%3E">
@@ -264,7 +264,7 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
       <a href="#apps">Apps</a>
       <a href="#industry-packs">Packs</a>
       <a href="#install">Install</a>
-      <a href="https://github.com/jezweb/office-town">GitHub</a>
+      <a href="https://github.com/jezweb/office-town-cloud">GitHub</a>
     </div>
   </div>
 </nav>
@@ -272,9 +272,9 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
 <header class="hero">
   <div class="container">
     <div class="kicker">open source · runs on your Cloudflare</div>
-    <h1>Your AI's memory, <em>in plain sight.</em></h1>
+    <h1>A town your AI team <em>works from.</em></h1>
     <p class="tagline">
-      Most AI assistants forget you the moment you close the tab — and what they do remember is locked in a black box. Office Town is a personal cortex that remembers your work, your people, your decisions as plain markdown files on your own Cloudflare. You can open every one in Finder. It gives your AI seven real capabilities — memory, files, email, cron, voice, code, and interactive apps — plus a team of named specialists. Empty your filing cabinet into it and watch it learn your business.
+      Office Town is a place you go into to get work done. Open Goose in your town and the team's already there — <strong>@boss</strong> routes the work, <strong>@librarian</strong> files what you learn, <strong>@worker</strong> builds, <strong>@scout</strong> watches the world. They remember your work, your people, and your decisions as plain markdown on your own Cloudflare — every file openable in Finder, nothing in a black box. Empty your filing cabinet into it and watch it learn your business.
     </p>
     <div class="cta">
       <a href="#install" class="btn btn-primary">Install — deploy to your Cloudflare</a>
@@ -388,7 +388,7 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
         <li>A <strong>Cloudflare</strong> account and a <strong>GitHub</strong> account (sign-ups, not installs) — the button puts your own copy of the backend on GitHub and deploys it to your Cloudflare. Can't set those up? Ask whoever looks after your tech to run this once — it's a five-minute job for them.</li>
         <li>A <strong>payment method on your Cloudflare account</strong> — Cloudflare asks for a card to switch on <strong>R2</strong> (your cortex storage) and <strong>Browser Rendering</strong>. Normal use stays inside the free tiers (~$0 at typical volume), so you're enabling the services, not committing to a bill — but the card is required before the deploy will work.</li>
         <li><a href="https://block.github.io/goose/" style="color: var(--accent);">Goose Desktop</a> — the local agent runtime the town's interactive apps run inside.</li>
-        <li>A <strong>model</strong> for Goose to think with — open Goose's settings and add a provider; an <a href="https://goose-docs.ai/docs/getting-started/providers" style="color: var(--accent);">OpenRouter</a> API key is the easy pick (one key, every model). Without it the final "hi" has nothing to answer with.</li>
+        <li>A <strong>model</strong> for Goose to think with — open Goose's settings and add a provider; an <a href="https://block.github.io/goose/docs/getting-started/providers" style="color: var(--accent);">OpenRouter</a> API key is the easy pick (one key, every model). Without it the final "hi" has nothing to answer with.</li>
         <li>The <strong>Goose CLI</strong> — you don't install this yourself; the connect step adds it for you (it runs the background cron + workflows).</li>
       </ul>
       <p style="margin-bottom: 0.5rem;"><strong>Nice to have</strong> — handy once you're working, add any time:</p>
@@ -413,12 +413,12 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
 
     <div class="install-step">
       <h3><span class="num">2</span> Wire it into Goose — one paste</h3>
-      <p>Open <code>&lt;your-worker-url&gt;/dashboard/connect</code>, click <strong>Claim this install</strong>, then copy the pre-filled one-liner and paste it into a terminal. It bootstraps the Goose CLI if needed, wires the MCPs into Goose, installs the apps + the <code>officetowd</code> sync daemon, and creates your cortex folder at <code>~/OfficeTown/</code>.</p>
+      <p>Open <code>&lt;your-worker-url&gt;/dashboard/connect</code>, click <strong>Claim this install</strong>, then copy the pre-filled one-liner and paste it into a terminal. It bootstraps the Goose CLI if needed, wires the MCPs into Goose, installs the <code>officetowd</code> sync daemon, and creates your town at <code>~/OfficeTown/</code> — complete with your team, the wiki, and the workflows, ready to open in Goose.</p>
     </div>
 
     <div class="install-step" style="background: var(--accent-soft); border-color: var(--accent);">
       <h3><span class="num">✓</span> Then just say hi</h3>
-      <p>Quit and reopen Goose Desktop so it loads the new extensions, open a fresh chat, and type <strong>"hi"</strong> — an agent welcomes you and offers a few ways to start. The fastest: drop a pile of your real documents into <code>~/OfficeTown/inbox/</code> and ask it to go through them. It'll read everything and learn your business.</p>
+      <p>Quit and reopen Goose Desktop so it loads the new extensions, <strong>open it in your <code>~/OfficeTown</code> folder</strong> (that's where your team lives — open it anywhere else and they won't show), and type <strong>"hi"</strong> — an agent welcomes you and offers a few ways to start. The fastest: drop a pile of your real documents into <code>~/OfficeTown/inbox/</code> and ask it to go through them. It'll read everything and learn your business.</p>
     </div>
 
     <p style="font-size: 0.9em; color: var(--muted); margin-top: 1.5rem;">
@@ -432,19 +432,19 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
     <h2>The shape</h2>
     <p class="lead">Markdown files on your Cloudflare. Hybrid keyword + semantic search built in. Edit in Obsidian, Goose, the web dashboard, or any text editor — they all talk to the same source of truth.</p>
 
-    <div class="shape">your-cortex/
-├── wiki/
-│   ├── orgs/              <span class="comment"># clients, prospects, vendors</span>
-│   ├── contacts/          <span class="comment"># humans you work with</span>
-│   ├── projects/          <span class="comment"># active + historical work</span>
-│   ├── decisions/         <span class="comment"># why we chose X</span>
-│   ├── knowledge/         <span class="comment"># graduated findings</span>
-│   ├── owner/             <span class="comment"># your voice, rhythm, preferences</span>
-│   ├── team/              <span class="comment"># humans + agent profiles</span>
-│   ├── business/          <span class="comment"># who you are</span>
-│   └── tasks/             <span class="comment"># open, in-flight, done</span>
-├── files/                 <span class="comment"># R2-backed file storage</span>
-└── AGENTS.md              <span class="comment"># your town's standing orders</span></div>
+    <div class="shape">~/OfficeTown/              <span class="comment"># open Goose here — your town</span>
+├── AGENTS.md              <span class="comment"># the town's standing orders</span>
+├── buildings/             <span class="comment"># each teammate's home base + memory</span>
+│   ├── office/            <span class="comment"># @boss</span>
+│   ├── library/           <span class="comment"># @librarian</span>
+│   ├── workshop/          <span class="comment"># @worker</span>
+│   └── lookout/           <span class="comment"># @scout</span>
+├── wiki/                  <span class="comment"># the shared records everyone files into</span>
+│   ├── orgs/  contacts/  projects/  decisions/
+│   └── knowledge/  owner/  team/  business/  tasks/ …
+├── workflows/             <span class="comment"># standing jobs the town runs</span>
+├── files/                 <span class="comment"># your file storage</span>
+└── .agents/               <span class="comment"># the roles, skills + recipes (the team itself)</span></div>
   </div>
 </section>
 
@@ -534,7 +534,7 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
 
     <div class="cta" style="margin-top: 2.5rem;">
       <a href="#install" class="btn btn-primary">Start installing</a>
-      <a href="https://github.com/jezweb/office-town" class="btn btn-secondary">Read the source</a>
+      <a href="https://github.com/jezweb/office-town-cloud" class="btn btn-secondary">Read the source</a>
     </div>
   </div>
 </section>
@@ -543,8 +543,8 @@ figure.shot figcaption code { background: var(--bg); border: 1px solid var(--bor
   <div class="container">
     <div>© 2026 Jezweb Pty Ltd · MIT licensed · <a href="https://officetown.au" style="margin-right: 0; color: var(--muted);">officetown.au</a></div>
     <div>
-      <a href="https://github.com/jezweb/office-town">GitHub</a>
       <a href="https://github.com/jezweb/office-town-cloud">Backend</a>
+      <a href="https://github.com/jezweb/office-town-starter">Starter town</a>
       <a href="https://jezweb.com.au" style="margin-right: 0;">Built by Jezweb</a>
     </div>
   </div>
